@@ -9,8 +9,8 @@
 
 .slider {
   position: absolute;
-  left: -4px;
-  right: -4px;
+  left: 0;
+  right: 0;
   top: -16px;
 }
 
@@ -33,6 +33,12 @@
 
 @media (max-width: 912px) {
   .outer {
-    height: 70px;
+    height: 64px;
+  }
+
+  .playControls {
+    .timer {
+      display: none;
+    }
   }
 }

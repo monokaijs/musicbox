@@ -7,6 +7,16 @@ export default function FooterPlayer() {
   return <div className={styles.outer}>
     <Slider
       defaultValue={30}
+      step={.1}
+      tooltip={{
+        formatter: (time?: number) => {
+          if (time) {
+            const minutes = Math.floor(time / 60);
+            const seconds = ~~(time - minutes * 60);
+            return `${minutes}:${seconds}`;
+          } else return "--:--";
+        }
+      }}
       className={styles.slider}
     />
     <div className={styles.playControls}>
