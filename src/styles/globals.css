@@ -4,3 +4,10 @@ html, body, #__next {
   padding: 0;
   overflow: hidden;
 }
+
+#__next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0b0e0e;
+}

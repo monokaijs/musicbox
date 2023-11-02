@@ -10,11 +10,8 @@ interface AppLayoutProps {
 
 export default function AppLayout({children}: AppLayoutProps) {
   return <ThemeProvider>
-    <Layout className={styles.outer}>
-      <div className={styles.content}>
-        {children}
-      </div>
-      <FooterPlayer/>
-    </Layout>
+    <div className={styles.outer}>
+      {children}
+    </div>
   </ThemeProvider>
 }
