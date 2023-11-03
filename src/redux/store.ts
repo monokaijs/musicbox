@@ -14,6 +14,9 @@ export const store = configureStore({
     storage,
     whitelist: ['app']
   }, combinedReducer),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 })
 export const persistor = persistStore(store);
 
