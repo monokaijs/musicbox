@@ -1,4 +1,7 @@
 interface YouTubeTrack {
+  title: {
+    text: string;
+  };
   author: {
     id: string;
     name: string;
@@ -15,6 +18,11 @@ interface YouTubeTrack {
   };
   id: string;
   thumbnails: {
+    width: number;
+    height: number;
+    url: string;
+  }[];
+  thumbnail?: {
     width: number;
     height: number;
     url: string;

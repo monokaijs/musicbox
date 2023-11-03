@@ -14,6 +14,10 @@ class ApiService {
     }) as Promise<any>;
   }
 
+  getMusicExplore() {
+    return this.call('music-explore', {}) as Promise<any>;
+  }
+
   async call(endpoint: string, data?: any) {
     const r = await axios(`/api/${endpoint}`, {
       method: 'POST',

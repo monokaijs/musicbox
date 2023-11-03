@@ -1,0 +1,45 @@
+
+.itemsList {
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  min-width: 0;
+  padding-left: 16px;
+
+  .item {
+    display: inline-block;
+    margin-right: 16px;
+    width: 120px;
+    cursor: pointer;
+
+    .itemArtwork {
+      width: 100%;
+      aspect-ratio: 1;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+    }
+
+    .itemMeta {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+
+      .trackTitle {
+        width: 100%;
+        font-size: 10px;
+      }
+
+      .trackArtist {
+        text-transform: uppercase;
+        color: #faa800;
+        font-size: 11px;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
