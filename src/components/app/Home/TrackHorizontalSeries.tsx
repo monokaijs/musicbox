@@ -1,5 +1,5 @@
 import styles from "@/components/app/Home/TrackHorizontalSeries.module.scss";
-import {Typography} from "antd";
+import {Empty, Typography} from "antd";
 import {useAppSelector} from "@/redux/hooks";
 
 interface TrackHorizontalSeriesProps {
@@ -8,10 +8,14 @@ interface TrackHorizontalSeriesProps {
 
 export default function TrackHorizontalSeries({tracks}: TrackHorizontalSeriesProps) {
   return <div className={styles.itemsList}>
+    {tracks.length === 0 && (
+      <Empty
+        description={'No tracks here...'}
+      />
+    )}
     {tracks.map((track, index) => {
       if (!track.title) return;
       if (!track.author) return;
-      console.log(track.id);
       return (<div className={styles.item} key={track.id + "_" + index}>
         <div
           style={{
