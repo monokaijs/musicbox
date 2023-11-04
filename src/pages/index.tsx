@@ -1,11 +1,12 @@
-import {AutoComplete, Button, Input, Layout} from "antd";
-import {SearchOutlined, UsergroupAddOutlined} from "@ant-design/icons";
+import {Button, Layout} from "antd";
+import {UsergroupAddOutlined} from "@ant-design/icons";
 import styles from "@/styles/Home.module.css";
 import SearchInput from "@/components/shared/SearchInput";
-import FavoriteSection from "@/components/app/Home/FavoriteSection";
 import ExploreSection from "@/components/app/Home/ExploreSection";
+import PlaylistsSection from "@/components/app/Home/PlaylistsSection";
 
 export default function Home() {
+
   return (
     <Layout>
       <div className={styles.headerControls}>
@@ -15,7 +16,7 @@ export default function Home() {
         />
       </div>
       <ExploreSection/>
-      <FavoriteSection/>
+      <PlaylistsSection/>
     </Layout>
   )
 }

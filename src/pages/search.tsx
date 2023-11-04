@@ -8,9 +8,11 @@ import SearchInput from "@/components/shared/SearchInput";
 import {useRouter} from "next/router";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
+import {addTrackToPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 
 export default function SearchPage() {
-  const {favoriteTracks} = useAppSelector(state => state.app);
+  const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
+  const favoriteTracks = favoritePlaylist?.tracks || [];
   const [results, setResults] = useState([]);
   const searchParams = useSearchParams()
   const query = decodeURIComponent(searchParams.get('q') || "");
@@ -38,7 +40,7 @@ export default function SearchPage() {
         rootClassName={styles.searchResultsOuter}
         style={{minHeight: 0}}
         dataSource={results}
-        renderItem={(item: any) => {
+        renderItem={(item: YouTubeTrack) => {
           const isPrevFavorite = favoriteTracks.findIndex(x => x.id === item.id) >= 0;
           return <>
           <div className={styles.searchResultItem}>
@@ -61,7 +63,23 @@ export default function SearchPage() {
                 icon={isPrevFavorite ? <HeartFilled/> : <HeartOutlined/>}
                 shape={'circle'}
                 type={'text'}
-                onClick={() => dispatch(toggleFavoriteTrack(item))}
+                onClick={async () => {
+                  try {
+                    if (isPrevFavorite) {
+                      await dispatch(removeTrackFromPlaylist({
+                        trackId: item.id,
+                        playlistId: 'FAVORITE'
+                      }));
+                    } else {
+                      await dispatch(addTrackToPlaylist({
+                        track: item,
+                        playlistId: 'FAVORITE'
+                      }))
+                    }
+                  } catch (e) {
+                    console.log(e);
+                  }
+                }}
               />
               <Button
                 icon={<PlusOutlined/>}

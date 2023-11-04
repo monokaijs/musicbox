@@ -6,6 +6,12 @@
   white-space: nowrap;
   min-width: 0;
   padding-left: 16px;
+  user-select: none;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 
   .item {
     display: inline-block;

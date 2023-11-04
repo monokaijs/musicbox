@@ -1,0 +1,85 @@
+.listOuter {
+  flex-direction: row;
+  padding-left: 16px;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  min-width: 0;
+  user-select: none;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.item {
+  display: inline-block;
+  background-color: #FFFFFF11;
+  color: white;
+  width: 120px;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+
+  .playlistImageWrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+
+    .playlistArtwork {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      transition: all 300ms ease-in-out;
+    }
+
+  }
+
+  &:hover {
+    .playlistArtwork {
+      transform: scale(1.2);
+    }
+  }
+
+
+  .meta {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 4px 8px 8px;
+    background-color: #00000088;
+    backdrop-filter: blur(6px);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    display: flex;
+    flex-direction: column;
+
+    .name {
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .desc {
+      font-size: 9px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

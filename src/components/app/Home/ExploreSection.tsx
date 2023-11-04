@@ -11,10 +11,6 @@ export default function ExploreSection() {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(sections);
-  }, [sections]);
-
   return <div>
     {sections.filter(section => !section.num_items_per_column).map(section => (
       <>
