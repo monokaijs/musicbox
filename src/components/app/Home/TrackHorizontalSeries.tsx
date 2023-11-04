@@ -8,10 +8,11 @@ interface TrackHorizontalSeriesProps {
 
 export default function TrackHorizontalSeries({tracks}: TrackHorizontalSeriesProps) {
   return <div className={styles.itemsList}>
-    {tracks.map(track => {
+    {tracks.map((track, index) => {
       if (!track.title) return;
       if (!track.author) return;
-      return (<div className={styles.item} key={track.id}>
+      console.log(track.id);
+      return (<div className={styles.item} key={track.id + "_" + index}>
         <div
           style={{
             backgroundImage: `url('${(track.thumbnails || track.thumbnail)?.[0].url}')`
