@@ -14,6 +14,12 @@ class ApiService {
     }) as Promise<any>;
   }
 
+  getPlayableUrl(id: string) {
+    return this.call('get-playable-url', {
+      ids: [id]
+    }) as Promise<any>
+  }
+
   getMusicExplore() {
     return this.call('music-explore', {}) as Promise<any>;
   }

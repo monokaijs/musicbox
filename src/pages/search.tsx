@@ -9,6 +9,7 @@ import {useRouter} from "next/router";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
 import {addTrackToPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
+import playerService from "@/services/player.service";
 
 export default function SearchPage() {
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
@@ -45,17 +46,28 @@ export default function SearchPage() {
           return <>
           <div className={styles.searchResultItem}>
             <div
-              className={styles.searchResultItemThumbnail}
-              style={{
-                backgroundImage: `url(${item.thumbnails[0].url})`
+              className={styles.searchResultItemInfo}
+              onClick={e => {
+                apiService.getPlayableUrl(item.id).then(({data}) => {
+                  console.log(data);
+
+                  playerService.playAudio(data[0].url);
+                });
               }}
-            />
-            <div className={styles.searchResultItemMeta}>
-              <div className={styles.searchResultItemTitle}>
-                {item.title?.text}
-              </div>
-              <div className={styles.searchResultItemTimer}>
-                {item.duration.text}
+            >
+              <div
+                className={styles.searchResultItemThumbnail}
+                style={{
+                  backgroundImage: `url(${item.thumbnails[0].url})`
+                }}
+              />
+              <div className={styles.searchResultItemMeta}>
+                <div className={styles.searchResultItemTitle}>
+                  {item.title?.text}
+                </div>
+                <div className={styles.searchResultItemTimer}>
+                  {item.duration.text}
+                </div>
               </div>
             </div>
             <div className={styles.searchResultItemControls}>
