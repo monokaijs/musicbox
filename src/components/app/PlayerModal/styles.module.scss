@@ -38,6 +38,11 @@
     background-size: cover;
     background-position: center;
     border-radius: 16px;
+    z-index: 99;
+    position: relative;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
   }
 
   .meta {
@@ -88,7 +93,7 @@
       padding: 10px 24px;
 
       .small {
-        font-size: 20px;
+        font-size: 26px;
         color: white;
       }
       .large {
