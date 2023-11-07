@@ -3,30 +3,26 @@ import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
 import {addTrackToPlaylist, createPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {enqueueTrack} from "@/redux/actions/player.actions";
 
-export enum PlayerState {
-  STOPPED = 0,
-  PAUSED = 1,
-  PLAYING = 2,
-}
-
 export interface PlayerSliceState {
-  playerState: PlayerState
+  playerState: number,
   queue: YouTubeTrack[];
   playingIndex: number;
   openModal: boolean;
   paused: boolean;
   currentTime: number;
   shouldUpdateBySeek: boolean;
+  loading: boolean;
 }
 
 const initialState: PlayerSliceState = {
-  playerState: PlayerState.STOPPED,
+  playerState: 0,
   queue: [],
   playingIndex: 0,
   openModal: false,
   paused: false,
   currentTime: 0,
   shouldUpdateBySeek: false,
+  loading: true,
 }
 
 type SetPlayerArgs<T> = {
@@ -60,7 +56,6 @@ const playerSlice = createSlice({
       } else {
         state.queue.push(action.payload.track);
         if (action.payload.playNow) {
-          state.playerState = PlayerState.PLAYING;
           state.playingIndex = state.queue.length - 1;
         }
       }

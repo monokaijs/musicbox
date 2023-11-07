@@ -1,13 +1,20 @@
 import styles from "@/styles/FooterPlayer.module.scss";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {getTrackThumbnail} from "@/utils/player.utils";
-import {Button, Typography} from "antd";
-import {CaretRightFilled, PauseOutlined, StepForwardFilled} from "@ant-design/icons";
+import {Button, Spin, Typography} from "antd";
+import {
+  CaretRightFilled,
+  LoadingOutlined,
+  PauseCircleFilled,
+  PauseOutlined,
+  PlayCircleFilled,
+  StepForwardFilled
+} from "@ant-design/icons";
 import {openPlayerModal} from "@/redux/slices/player.slice";
 import {playerEl} from "@/components/providers/PlayerProvider";
 
 export default function FooterPlayer() {
-  const {queue, playingIndex, paused} = useAppSelector(state => state.player);
+  const {queue, playingIndex, paused, loading} = useAppSelector(state => state.player);
   const currentTrack = queue?.[playingIndex];
   const dispatch = useAppDispatch();
   return <div
@@ -48,7 +55,11 @@ export default function FooterPlayer() {
           } else return playerEl.pause();
         }}
         size={'large'}
-        icon={paused ? <CaretRightFilled/> : <PauseOutlined/>}
+        icon={loading ? (
+          <Spin indicator={<LoadingOutlined spin/>} style={{color: 'white'}}/>
+        ) : (
+          paused ? <CaretRightFilled/> : <PauseOutlined/>
+        )}
         type={'text'}
       />
       <Button

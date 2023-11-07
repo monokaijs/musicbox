@@ -1,12 +1,12 @@
 import styles from "./styles.module.scss";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {formatTime, getTrackThumbnail} from "@/utils/player.utils";
-import {Button, ConfigProvider, Divider, Slider, Typography} from "antd";
+import {Button, ConfigProvider, Divider, Slider, Spin, Typography} from "antd";
 import {
   CaretDownOutlined,
   CloseOutlined,
   HeartFilled,
-  HeartOutlined,
+  HeartOutlined, LoadingOutlined,
   PauseCircleFilled, PlayCircleFilled, RetweetOutlined, RollbackOutlined,
   StepBackwardFilled, StepForwardFilled
 } from "@ant-design/icons";
@@ -19,7 +19,7 @@ export default function PlayerModal() {
   const [isFavorite, setIsFavorite] = useState(false);
   const dispatch = useAppDispatch();
   const [seekTime, setSeekTime] = useState(0);
-  const {openModal, queue, playingIndex, currentTime, paused} = useAppSelector(state => state.player);
+  const {openModal, queue, playingIndex, currentTime, paused, loading} = useAppSelector(state => state.player);
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
   const currentTrack = queue[playingIndex];
 
@@ -128,13 +128,17 @@ export default function PlayerModal() {
         <a
           className={styles.large}
           onClick={() => {
-            if (!playerEl) return;
+            if (!playerEl || loading) return;
             if (playerEl.paused) {
               return playerEl.play()
             } else return playerEl.pause();
           }}
         >
-          {paused ? <PlayCircleFilled/> : <PauseCircleFilled/>}
+          {loading ? (
+            <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+          ): (
+            paused ? <PlayCircleFilled/> : <PauseCircleFilled/>
+          )}
         </a>
         <a className={styles.small}>
           <StepForwardFilled/>

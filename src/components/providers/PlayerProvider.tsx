@@ -31,6 +31,8 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
       el.onpause = () => dispatch(setPlayer({paused: el.paused}));
       el.onplay = () => dispatch(setPlayer({paused: el.paused}));
       el.onplaying = () => dispatch(setPlayer({paused: el.paused}));
+      el.onloadstart = () => dispatch(setPlayer({loading: true}));
+      el.oncanplay = () => dispatch(setPlayer({loading: false}));
     }
   }, [audioRef.current]);
 
