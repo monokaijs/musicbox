@@ -4,6 +4,7 @@ import styles from "@/styles/Home.module.css";
 import SearchInput from "@/components/shared/SearchInput";
 import ExploreSection from "@/components/app/Home/ExploreSection";
 import PlaylistsSection from "@/components/app/Home/PlaylistsSection";
+import PlayerProvider from "@/components/app/PlayerProvider";
 
 export default function Home() {
 

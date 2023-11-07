@@ -3,6 +3,7 @@ import ThemeProvider from "@/components/providers/ThemeProvider";
 import {ReactNode} from "react";
 import FooterPlayer from "../app/FooterPlayer";
 import {Layout} from "antd";
+import PlayerProvider from "@/components/app/PlayerProvider";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -10,8 +11,10 @@ interface AppLayoutProps {
 
 export default function AppLayout({children}: AppLayoutProps) {
   return <ThemeProvider>
-    <div className={styles.outer}>
-      {children}
-    </div>
+    <PlayerProvider>
+      <div className={styles.outer}>
+        {children}
+      </div>
+    </PlayerProvider>
   </ThemeProvider>
 }

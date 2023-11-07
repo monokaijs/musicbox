@@ -35,7 +35,6 @@
   .figure {
     width: 100%;
     aspect-ratio: 1;
-    overflow: hidden;
     background-size: cover;
     background-position: center;
     border-radius: 16px;
@@ -46,19 +45,24 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 0;
-    padding-bottom: 8px;
+    padding: 16px 0 8px;
 
     .info {
       display: flex;
       flex-direction: column;
+      min-width: 0;
 
       .title {
         font-weight: 600;
         font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
       }
       .author {
         font-size: 11px;
+        opacity: .4;
       }
     }
   }
