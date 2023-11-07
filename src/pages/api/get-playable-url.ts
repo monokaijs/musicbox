@@ -1,18 +1,25 @@
 import {Innertube} from 'youtubei.js';
 import {NextApiRequest, NextApiResponse} from "next";
+import ytdl from "@distube/ytdl-core";
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const youtube = await Innertube.create();
   let data = [];
   for (let id of req.body.ids || []) {
-    const info = await youtube.getInfo(id, 'ANDROID');
-    const format = info.chooseFormat({type: 'audio', quality: 'best'});
-    const url = format?.decipher(youtube.session.player);
-    data.push({
-      id, url,
-      metadata: info,
-    });
+    const info = await ytdl.getInfo('https://www.youtube.com/watch?v=' + id);
+    if (info && info.formats) {
+      const formats = info.formats;
+      const audioFormats = info.formats.filter(x => x.mimeType?.startsWith('audio/')).sort((a, b) => {
+        return (b?.audioBitrate || 0) - (a?.audioBitrate || 0);
+      });
+      if (audioFormats.length > 0) {
+        data.push({
+          id,
+          url: audioFormats[0].url,
+          metadata: info,
+        })
+      }
+    }
   }
   res.json({
     data,

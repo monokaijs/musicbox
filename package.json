@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@distube/ytdl-core": "^4.13.2",
     "@reduxjs/toolkit": "^1.9.7",
     "antd": "^5.9.4",
     "axios": "^1.6.0",
