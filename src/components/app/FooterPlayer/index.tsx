@@ -4,13 +4,14 @@ import {getTrackThumbnail} from "@/utils/player.utils";
 import {Button, Typography} from "antd";
 import {CaretRightFilled, PauseOutlined, StepForwardFilled} from "@ant-design/icons";
 import {openPlayerModal} from "@/redux/slices/player.slice";
+import {playerEl} from "@/components/providers/PlayerProvider";
 
 export default function FooterPlayer() {
   const {queue, playingIndex, paused} = useAppSelector(state => state.player);
   const currentTrack = queue?.[playingIndex];
   const dispatch = useAppDispatch();
   return <div
-    className={styles.outer + ` ${queue.length === 0 ? styles.hidden: ''}`}
+    className={styles.outer + ` ${queue.length === 0 ? styles.hidden : ''}`}
     onClick={() => {
       if (currentTrack) {
         dispatch(openPlayerModal());
@@ -39,6 +40,13 @@ export default function FooterPlayer() {
     </div>
     <div className={styles.controls}>
       <Button
+        onClick={(e) => {
+          e.stopPropagation();
+          if (!playerEl) return;
+          if (paused) {
+            return playerEl.play();
+          } else return playerEl.pause();
+        }}
         size={'large'}
         icon={paused ? <CaretRightFilled/> : <PauseOutlined/>}
         type={'text'}
