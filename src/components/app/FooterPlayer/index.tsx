@@ -1,7 +1,8 @@
 import styles from "@/styles/FooterPlayer.module.scss";
 import {useAppSelector} from "@/redux/hooks";
 import {getTrackThumbnail} from "@/utils/player.utils";
-import {Typography} from "antd";
+import {Button, Typography} from "antd";
+import {PauseOutlined, StepForwardFilled} from "@ant-design/icons";
 
 export default function FooterPlayer() {
   const {queue, playingIndex} = useAppSelector(state => state.player);
@@ -28,6 +29,18 @@ export default function FooterPlayer() {
       <Typography.Text className={styles.author}>
         {currentTrack?.author.name}
       </Typography.Text>
+    </div>
+    <div className={styles.controls}>
+      <Button
+        size={'large'}
+        icon={<PauseOutlined/>}
+        type={'text'}
+      />
+      <Button
+        size={'large'}
+        icon={<StepForwardFilled/>}
+        type={'text'}
+      />
     </div>
   </div>
 }

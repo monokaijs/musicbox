@@ -27,9 +27,9 @@ const playerSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(enqueueTrack.fulfilled, (state, action) => {
-      const existing = state.queue.find(x => x.id === action.payload.track.id);
-      if (existing) {
-        // error
+      const existingIndex = state.queue.findIndex(x => x.id === action.payload.track.id);
+      if (existingIndex >= 0) {
+        state.playingIndex = existingIndex;
       } else {
         state.queue.push(action.payload.track);
         if (action.payload.playNow) {
