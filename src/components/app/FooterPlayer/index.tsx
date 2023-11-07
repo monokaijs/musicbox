@@ -1,14 +1,21 @@
 import styles from "@/styles/FooterPlayer.module.scss";
-import {useAppSelector} from "@/redux/hooks";
+import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {getTrackThumbnail} from "@/utils/player.utils";
 import {Button, Typography} from "antd";
 import {PauseOutlined, StepForwardFilled} from "@ant-design/icons";
+import {openPlayerModal} from "@/redux/slices/player.slice";
 
 export default function FooterPlayer() {
   const {queue, playingIndex} = useAppSelector(state => state.player);
   const currentTrack = queue?.[playingIndex];
+  const dispatch = useAppDispatch();
   return <div
     className={styles.outer + ` ${queue.length === 0 ? styles.hidden: ''}`}
+    onClick={() => {
+      if (currentTrack) {
+        dispatch(openPlayerModal());
+      }
+    }}
   >
     <div
       className={styles.blurredFigure}

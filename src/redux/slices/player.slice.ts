@@ -13,18 +13,27 @@ export interface PlayerSliceState {
   playerState: PlayerState
   queue: YouTubeTrack[];
   playingIndex: number;
+  openModal: boolean;
 }
 
 const initialState: PlayerSliceState = {
   playerState: PlayerState.STOPPED,
   queue: [],
   playingIndex: 0,
+  openModal: false,
 }
 
 const playerSlice = createSlice({
   name: 'player',
   initialState,
-  reducers: {},
+  reducers: {
+    openPlayerModal: (state) => {
+      state.openModal = true;
+    },
+    closePlayerModal: (state) => {
+      state.openModal = false;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(enqueueTrack.fulfilled, (state, action) => {
       const existingIndex = state.queue.findIndex(x => x.id === action.payload.track.id);
@@ -41,6 +50,6 @@ const playerSlice = createSlice({
   }
 });
 
-export const {} = playerSlice.actions;
+export const {openPlayerModal, closePlayerModal} = playerSlice.actions;
 
 export default playerSlice;
