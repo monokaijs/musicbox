@@ -9,7 +9,7 @@ import PlayerProvider from "@/components/providers/PlayerProvider";
 export default function Home() {
 
   return (
-    <Layout>
+    <Layout style={{minWidth: 0}}>
       <div className={styles.headerControls}>
         <SearchInput/>
         <Button
