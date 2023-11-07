@@ -7,6 +7,8 @@ interface PlayerProviderProps {
   children: ReactNode;
 }
 
+export let playerEl: HTMLAudioElement | null = null;
+
 export default function PlayerProvider({children}: PlayerProviderProps) {
   const dispatch = useAppDispatch();
   const {playerState, queue, playingIndex, currentTime, shouldUpdateBySeek} = useAppSelector(state => state.player);
@@ -15,6 +17,7 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
   useEffect(() => {
     if (audioRef && audioRef.current) {
       const el = audioRef.current;
+      playerEl = el;
       el.onpause = () => {
         dispatch(setPlayer({
           paused: el.paused,
@@ -25,6 +28,9 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
           currentTime: el.currentTime
         }))
       }
+      el.onpause = () => dispatch(setPlayer({paused: el.paused}));
+      el.onplay = () => dispatch(setPlayer({paused: el.paused}));
+      el.onplaying = () => dispatch(setPlayer({paused: el.paused}));
     }
   }, [audioRef.current]);
 

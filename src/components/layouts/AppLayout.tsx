@@ -3,7 +3,7 @@ import ThemeProvider from "@/components/providers/ThemeProvider";
 import {ReactNode} from "react";
 import FooterPlayer from "../app/FooterPlayer";
 import {Layout} from "antd";
-import PlayerProvider from "@/components/app/PlayerProvider";
+import PlayerProvider from "@/components/providers/PlayerProvider";
 
 interface AppLayoutProps {
   children: ReactNode;

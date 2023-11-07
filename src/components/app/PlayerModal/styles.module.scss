@@ -68,6 +68,8 @@
   }
 
   .playerControls {
+    position: relative;
+    z-index: 99999;
     .timer {
       display: flex;
       flex-direction: row;
@@ -76,6 +78,22 @@
       .time {
         font-size: 12px;
         opacity: .4;
+      }
+    }
+
+    .controlButtons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+
+      .small {
+        font-size: 20px;
+        color: white;
+      }
+      .large {
+        font-size: 48px;
+        color: white;
       }
     }
   }

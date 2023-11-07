@@ -2,11 +2,11 @@ import styles from "@/styles/FooterPlayer.module.scss";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {getTrackThumbnail} from "@/utils/player.utils";
 import {Button, Typography} from "antd";
-import {PauseOutlined, StepForwardFilled} from "@ant-design/icons";
+import {CaretRightFilled, PauseOutlined, StepForwardFilled} from "@ant-design/icons";
 import {openPlayerModal} from "@/redux/slices/player.slice";
 
 export default function FooterPlayer() {
-  const {queue, playingIndex} = useAppSelector(state => state.player);
+  const {queue, playingIndex, paused} = useAppSelector(state => state.player);
   const currentTrack = queue?.[playingIndex];
   const dispatch = useAppDispatch();
   return <div
@@ -40,7 +40,7 @@ export default function FooterPlayer() {
     <div className={styles.controls}>
       <Button
         size={'large'}
-        icon={<PauseOutlined/>}
+        icon={paused ? <CaretRightFilled/> : <PauseOutlined/>}
         type={'text'}
       />
       <Button
