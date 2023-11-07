@@ -31,7 +31,7 @@ export default function SearchPage() {
       <SearchInput value={query}/>
     </div>
     <div className={styles.searchResults}>
-      <Typography.Title level={3} style={{margin: '0 16px'}}>
+      <Typography.Title level={3} style={{margin: '0 16px', marginBottom: 16}}>
         Search Results
       </Typography.Title>
       <VerticalTracksList
