@@ -6,6 +6,7 @@ import {HeartFilled, HeartOutlined, PlusOutlined} from "@ant-design/icons";
 import {addTrackToPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {getTrackThumbnail} from "@/utils/player.utils";
+import {enqueueTrack} from "@/redux/actions/player.actions";
 
 interface VerticalTracksListProps {
   tracks: YouTubeTrack[];
@@ -28,11 +29,16 @@ export default function VerticalTracksList({tracks, showFavorite}: VerticalTrack
           <div
             className={styles.searchResultItemInfo}
             onClick={e => {
-              apiService.getPlayableUrl(item.id).then(({data}) => {
-                console.log(data);
-
-                return playerService.playAudio(data[0].url);
-              });
+              dispatch(enqueueTrack({
+                track: item,
+                playNow: true,
+              }));
+              // apiService.getPlayableUrl(item.id).then(({data}) => {
+              //   console.log(data);
+              //   disp
+              //
+              //   return playerService.playAudio(data[0].url);
+              // });
             }}
           >
             <div

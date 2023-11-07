@@ -12,8 +12,8 @@ export default function PlayerLayout({children}: PlayerLayoutProps) {
     <Layout className={styles.playerOuter}>
       <div className={styles.content}>
         {children}
+        <FooterPlayer/>
       </div>
-      <FooterPlayer/>
     </Layout>
   </>
 }

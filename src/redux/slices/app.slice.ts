@@ -1,11 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
 import {addTrackToPlaylist, createPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
+import {enqueueTrack} from "@/redux/actions/player.actions";
 
 export interface AppSliceState {
   favoriteTracks: YouTubeTrack[];
   playlists: Playlist[];
-  queue: YouTubeTrack[];
 }
 
 const initialState: AppSliceState = {
@@ -17,7 +17,6 @@ const initialState: AppSliceState = {
     systemPlaylist: true,
     artwork: '',
   }],
-  queue: []
 }
 
 const appSlice = createSlice({
