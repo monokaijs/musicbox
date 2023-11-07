@@ -20,6 +20,12 @@ class ApiService {
     }) as Promise<any>
   }
 
+  getTrack(id: string) {
+    return this.call('get-track', {
+      id: id,
+    }) as Promise<any>
+  }
+
   getMusicExplore() {
     return this.call('music-explore', {}) as Promise<any>;
   }

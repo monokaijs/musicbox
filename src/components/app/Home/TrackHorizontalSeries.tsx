@@ -1,7 +1,9 @@
 import styles from "@/components/app/Home/TrackHorizontalSeries.module.scss";
 import {Empty, Typography} from "antd";
-import {useAppSelector} from "@/redux/hooks";
+import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {ReactNode, useEffect, useRef} from "react";
+import {enqueueTrack} from "@/redux/actions/player.actions";
+import apiService from "@/services/api.service";
 
 interface TrackHorizontalSeriesProps {
   tracks: YouTubeTrack[];
@@ -9,6 +11,8 @@ interface TrackHorizontalSeriesProps {
 
 export default function TrackHorizontalSeries({tracks}: TrackHorizontalSeriesProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (scrollRef && scrollRef.current) {
       let isScrolling = false;
@@ -50,7 +54,18 @@ export default function TrackHorizontalSeries({tracks}: TrackHorizontalSeriesPro
     {tracks && tracks.map((track, index) => {
       if (!track.title) return;
       if (!track.author) return;
-      return (<div className={styles.item} key={track.id + "_" + index}>
+      return (<div
+        className={styles.item} key={track.id + "_" + index}
+        onClick={() => {
+          // TODO: load track info on click before enqueue
+          apiService.getTrack(track.id).then(response => {
+            dispatch(enqueueTrack({
+              track: response.data,
+              playNow: true,
+            }));
+          });
+        }}
+      >
         <div
           style={{
             backgroundImage: `url('${(track.thumbnails || track.thumbnail)?.[0].url}')`
