@@ -4,16 +4,48 @@
 
 .header {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 1.6;
   position: relative;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+
+  .backButton {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+  }
 
   .figure {
 
   }
 
   .playlistMeta {
+    z-index: 99;
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 32px;
+    padding: 16px;
+
+    .title {
+      margin: 0;
+    }
+  }
+
+  &:after {
+    content: '';
     position: absolute;
     left: 0; right: 0; bottom: 0;
-    padding: 16px;
+    height: 200px;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0)), to(rgba(0, 0, 0, 1)));
   }
+}
+
+.content {
+  position: relative;
+  padding: 16px 0;
+  border-top-right-radius: 24px;
+  z-index: 999;
+  margin-top: -32px;
+  overflow: hidden;
 }

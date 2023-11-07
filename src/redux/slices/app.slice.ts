@@ -5,6 +5,7 @@ import {addTrackToPlaylist, createPlaylist, removeTrackFromPlaylist} from "@/red
 export interface AppSliceState {
   favoriteTracks: YouTubeTrack[];
   playlists: Playlist[];
+  queue: YouTubeTrack[];
 }
 
 const initialState: AppSliceState = {
@@ -16,6 +17,7 @@ const initialState: AppSliceState = {
     systemPlaylist: true,
     artwork: '',
   }],
+  queue: []
 }
 
 const appSlice = createSlice({

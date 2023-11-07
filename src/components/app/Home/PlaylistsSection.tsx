@@ -1,9 +1,11 @@
 import {useAppSelector} from "@/redux/hooks";
 import SectionTitle from "@/components/app/Home/SectionTitle";
-import {Typography} from "antd";
+import {Button, Typography} from "antd";
 import styles from "./PlaylistsSection.module.scss";
 import {HeartFilled} from "@ant-design/icons";
 import {useEffect, useRef} from "react";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 const PlaylistArtwork = ({playlist}: { playlist: Playlist }) => {
   const tracks = playlist.tracks;
@@ -24,6 +26,7 @@ export default function PlaylistsSection() {
   const {playlists} = useAppSelector(state => state.app);
   const renderPlaylists = [...playlists].sort((a, b) => a.systemPlaylist ? 1 : 0);
   const ref = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   useEffect(() => {
     if (ref && ref.current) {
       let isScrolling = false;
@@ -57,7 +60,12 @@ export default function PlaylistsSection() {
     }
   }, [ref]);
   return <div>
-    <SectionTitle title={'Playlists'}/>
+    <SectionTitle
+      title={'Playlists'}
+      extras={
+        <Button type={'text'}>Create</Button>
+      }
+    />
     <div
       ref={ref}
       className={styles.listOuter}
@@ -68,7 +76,12 @@ export default function PlaylistsSection() {
           playlistDescription = playlist.tracks.filter((x, i) => i < 2).map(t => t.author.name).join(', ');
         }
         return (
-          <div className={styles.item}>
+          <div
+            className={styles.item}
+            onClick={() => {
+              return router.push(`/playlists/${playlist.id}`);
+            }}
+          >
             <PlaylistArtwork playlist={playlist}/>
             <div className={styles.meta}>
               <Typography.Text className={styles.name}>

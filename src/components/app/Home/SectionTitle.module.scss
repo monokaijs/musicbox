@@ -1,3 +1,11 @@
 .sectionTitle {
-  padding: 0 16px;
+  padding: 16px 16px 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    margin: 0;
+  }
 }
