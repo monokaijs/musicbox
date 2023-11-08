@@ -28,7 +28,7 @@ export default function PlayerModal() {
   useEffect(() => {
     const favoriteTracks = favoritePlaylist?.tracks || [];
     setIsFavorite(favoriteTracks.findIndex(x => x.id === currentTrack?.id) > -1);
-  }, [favoritePlaylist]);
+  }, [favoritePlaylist, currentTrack]);
 
   useEffect(() => {
     setSeekTime(currentTime || 0);

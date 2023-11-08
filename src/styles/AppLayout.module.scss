@@ -20,3 +20,9 @@
   position: relative;
 }
 
+@media only screen and (max-height: 900px) {
+  .outer {
+    aspect-ratio: .64;
+    width: initial;
+  }
+}
