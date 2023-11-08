@@ -7,8 +7,8 @@ import {
   CloseOutlined,
   HeartFilled,
   HeartOutlined, LoadingOutlined,
-  PauseCircleFilled, PlayCircleFilled, RetweetOutlined, RollbackOutlined,
-  StepBackwardFilled, StepForwardFilled
+  PauseCircleFilled, PlayCircleFilled, RetweetOutlined, RollbackOutlined, SoundOutlined,
+  StepBackwardFilled, StepForwardFilled, UnorderedListOutlined
 } from "@ant-design/icons";
 import {closePlayerModal, setPlayer} from "@/redux/slices/player.slice";
 import {useEffect, useState} from "react";
@@ -120,6 +120,9 @@ export default function PlayerModal() {
 
       <div className={styles.controlButtons}>
         <a className={styles.small}>
+          <SoundOutlined/>
+        </a>
+        <a className={styles.small}>
           <RetweetOutlined/>
         </a>
         <a className={styles.small}>
@@ -145,6 +148,9 @@ export default function PlayerModal() {
         </a>
         <a className={styles.small}>
           <RollbackOutlined/>
+        </a>
+        <a className={styles.small}>
+          <UnorderedListOutlined/>
         </a>
       </div>
 

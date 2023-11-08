@@ -33,12 +33,6 @@ export default function VerticalTracksList({tracks, showFavorite}: VerticalTrack
                 track: item,
                 playNow: true,
               }));
-              // apiService.getPlayableUrl(item.id).then(({data}) => {
-              //   console.log(data);
-              //   disp
-              //
-              //   return playerService.playAudio(data[0].url);
-              // });
             }}
           >
             <div

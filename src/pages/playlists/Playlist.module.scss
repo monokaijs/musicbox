@@ -1,5 +1,5 @@
 .outer {
-
+  min-width: 0;
 }
 
 .header {
@@ -21,7 +21,7 @@
   }
 
   .playlistMeta {
-    z-index: 99;
+    z-index: 9;
     position: absolute;
     left: 0; right: 0;
     bottom: 32px;
@@ -31,6 +31,7 @@
       margin: 0;
     }
   }
+
 
   &:after {
     content: '';
@@ -45,7 +46,41 @@
   position: relative;
   padding: 16px 0;
   border-top-right-radius: 24px;
-  z-index: 999;
+  z-index: 10;
   margin-top: -32px;
-  overflow: hidden;
+
+  .playlistControls {
+    z-index: 100;
+    position: absolute;
+    right: 32px;
+    top: -27px;
+
+    .playButton {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: none;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      background: #faa800;
+      cursor: pointer;
+      transition: all 200ms ease-in-out;
+
+      &:hover {
+        color: #faa800;
+        background: white;
+      }
+    }
+  }
+
+  .exControls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-right: 100px;
+    padding-bottom: 8px;
+  }
 }
