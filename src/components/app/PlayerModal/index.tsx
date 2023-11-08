@@ -14,6 +14,8 @@ import {closePlayerModal, setPlayer} from "@/redux/slices/player.slice";
 import {useEffect, useState} from "react";
 import {addTrackToPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {playerEl} from "@/components/providers/PlayerProvider";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBackwardStep, faForwardStep, faHeadphones, faListUl, faRepeat, faShuffle} from "@fortawesome/free-solid-svg-icons";
 
 export default function PlayerModal() {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -120,13 +122,13 @@ export default function PlayerModal() {
 
       <div className={styles.controlButtons}>
         <a className={styles.small}>
-          <SoundOutlined/>
+          <FontAwesomeIcon icon={faHeadphones}/>
         </a>
         <a className={styles.small}>
-          <RetweetOutlined/>
+          <FontAwesomeIcon icon={faRepeat}/>
         </a>
         <a className={styles.small}>
-          <StepBackwardFilled/>
+          <FontAwesomeIcon icon={faBackwardStep}/>
         </a>
         <a
           className={styles.large}
@@ -144,13 +146,13 @@ export default function PlayerModal() {
           )}
         </a>
         <a className={styles.small}>
-          <StepForwardFilled/>
+          <FontAwesomeIcon icon={faForwardStep}/>
         </a>
         <a className={styles.small}>
-          <RollbackOutlined/>
+          <FontAwesomeIcon icon={faShuffle}/>
         </a>
         <a className={styles.small}>
-          <UnorderedListOutlined/>
+          <FontAwesomeIcon icon={faListUl}/>
         </a>
       </div>
 

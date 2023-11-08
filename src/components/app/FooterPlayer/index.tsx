@@ -19,18 +19,15 @@ export default function FooterPlayer() {
   const dispatch = useAppDispatch();
   return <div
     className={styles.outer + ` ${queue.length === 0 ? styles.hidden : ''}`}
+    style={{
+      '--bg': `url('${getTrackThumbnail(currentTrack)}')`
+    } as any}
     onClick={() => {
       if (currentTrack) {
         dispatch(openPlayerModal());
       }
     }}
   >
-    <div
-      className={styles.blurredFigure}
-      style={{
-        backgroundImage: `url('${getTrackThumbnail(currentTrack)}')`
-      }}
-    />
     <div
       className={styles.figure}
       style={{

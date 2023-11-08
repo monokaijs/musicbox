@@ -17,17 +17,19 @@
   box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 0px 10px 9px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+  z-index: 9;
 
   &.hidden {
     bottom: -100px;
     opacity: 0;
   }
 
-  .blurredFigure {
+  &:before {
+    content: '';
+    background-image: var(--bg);
     position: absolute;
     left: -64px; right: -64px; top: -64px; bottom: -64px;
     background-size: cover;
-    z-index: 0;
     filter: blur(24px);
     -webkit-filter: blur(24px);
     opacity: .3;
