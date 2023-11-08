@@ -11,7 +11,7 @@ export let playerEl: HTMLAudioElement | null = null;
 
 export default function PlayerProvider({children}: PlayerProviderProps) {
   const dispatch = useAppDispatch();
-  const {playerState, queue, playingIndex, currentTime, shouldUpdateBySeek} = useAppSelector(state => state.player);
+  const {playerState, queue, playingIndex, currentTime, shouldUpdateBySeek, volumeLevel} = useAppSelector(state => state.player);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -58,6 +58,13 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
       }))
     }
   }, [shouldUpdateBySeek]);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    if (volumeLevel !== audioRef.current.volume) {
+      audioRef.current.volume = volumeLevel / 100;
+    }
+  }, [volumeLevel]);
 
   return <>
     <audio

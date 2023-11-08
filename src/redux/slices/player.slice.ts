@@ -12,6 +12,8 @@ export interface PlayerSliceState {
   currentTime: number;
   shouldUpdateBySeek: boolean;
   loading: boolean;
+  audioControlModal: boolean;
+  volumeLevel: number;
 }
 
 const initialState: PlayerSliceState = {
@@ -23,6 +25,8 @@ const initialState: PlayerSliceState = {
   currentTime: 0,
   shouldUpdateBySeek: false,
   loading: true,
+  audioControlModal: false,
+  volumeLevel: 100,
 }
 
 type SetPlayerArgs<T> = {

@@ -1,0 +1,56 @@
+.outer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -100vh;
+  transition: all 300ms ease-in-out;
+
+  &.show {
+    bottom: 0;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 999;
+
+    overflow: hidden;
+
+    .title {
+      margin: 0 0 16px;
+    }
+
+    .sectionTitle {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .topControls {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+    }
+
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: -100px;
+      right: -100px;
+      top: -100px;
+      bottom: -100px;
+      background: #00000044;
+      backdrop-filter: blur(16px);
+      z-index: -1;
+    }
+  }
+}

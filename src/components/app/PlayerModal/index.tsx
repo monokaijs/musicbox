@@ -121,7 +121,11 @@ export default function PlayerModal() {
       </div>
 
       <div className={styles.controlButtons}>
-        <a className={styles.small}>
+        <a className={styles.small} onClick={() => {
+          dispatch(setPlayer({
+            audioControlModal: true,
+          }))
+        }}>
           <FontAwesomeIcon icon={faHeadphones}/>
         </a>
         <a className={styles.small}>
