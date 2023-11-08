@@ -21,6 +21,7 @@ export default function PlayerModal() {
   const [isFavorite, setIsFavorite] = useState(false);
   const dispatch = useAppDispatch();
   const [seekTime, setSeekTime] = useState(0);
+  const [seeking, setSeeking] = useState(false);
   const {openModal, queue, playingIndex, currentTime, paused, loading} = useAppSelector(state => state.player);
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
   const currentTrack = queue[playingIndex];
@@ -31,7 +32,7 @@ export default function PlayerModal() {
   }, [favoritePlaylist, currentTrack]);
 
   useEffect(() => {
-    setSeekTime(currentTime || 0);
+    if(!seeking) setSeekTime(currentTime || 0);
   }, [currentTime]);
 
   if (!currentTrack) return;
@@ -101,9 +102,11 @@ export default function PlayerModal() {
             formatter: (value) => formatTime(value || 0),
           }}
           onChange={value => {
+            setSeeking(true);
             setSeekTime(value);
           }}
           onAfterChange={value => {
+            setSeeking(false);
             dispatch(setPlayer({
               currentTime: value,
               shouldUpdateBySeek: true,
