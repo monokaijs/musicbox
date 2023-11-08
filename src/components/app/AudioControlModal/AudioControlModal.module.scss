@@ -6,6 +6,7 @@
   right: 0;
   bottom: -100vh;
   transition: all 300ms ease-in-out;
+  z-index: 999;
 
   &.show {
     bottom: 0;
@@ -15,8 +16,6 @@
     display: flex;
     flex-direction: column;
     padding: 32px;
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
     position: absolute;
     left: 0; right: 0; bottom: 0;
     z-index: 999;
@@ -51,6 +50,16 @@
       background: #00000044;
       backdrop-filter: blur(16px);
       z-index: -1;
+    }
+  }
+  .credit {
+    margin-top: 32px;
+    font-size: 12px;
+    opacity: .6;
+    transition: all 300ms ease-in-out;
+
+    &:hover {
+      opacity: 1;
     }
   }
 }

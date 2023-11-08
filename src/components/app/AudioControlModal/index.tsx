@@ -93,6 +93,9 @@ export default function AudioControlModal() {
           </Select.Option>
         ))}
       </Select>
+      <Typography.Text className={styles.credit}>
+        Made with love by <a href={'https://delimister.com'}>@delimister</a> (a.k.a @monokaijs)
+      </Typography.Text>
     </div>
   </div>
 }
