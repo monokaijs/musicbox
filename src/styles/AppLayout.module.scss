@@ -20,9 +20,17 @@
   position: relative;
 }
 
-@media only screen and (max-height: 900px) {
+@media only screen and (max-height: 900px) and (min-width: 601px) {
   .outer {
     aspect-ratio: .64;
     width: initial;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .outer {
+    border-radius: 0;
+    max-height: initial;
+    aspect-ratio: initial;
   }
 }

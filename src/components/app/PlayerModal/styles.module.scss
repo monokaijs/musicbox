@@ -10,6 +10,9 @@
   background: black;
   padding: 32px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   .controls {
     margin-bottom: 16px;
@@ -23,9 +26,9 @@
     right: -100px;
     top: -100px;
     bottom: -100px;
-    filter: blur(48px);
-    -webkit-filter: blur(48px);
-    opacity: .3;
+    filter: blur(32px);
+    -webkit-filter: blur(32px);
+    opacity: .4;
   }
 
 
@@ -52,6 +55,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 0 8px;
+    z-index: 99;
+    position: relative;
+    flex: 1;
 
     .info {
       display: flex;
@@ -102,5 +108,16 @@
         color: white;
       }
     }
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 80%;
+    background: linear-gradient(to top, rgba(0, 0, 0, .9) 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1;
   }
 }
