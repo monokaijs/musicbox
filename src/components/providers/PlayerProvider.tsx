@@ -57,7 +57,9 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
   }, [audioRef.current]);
 
   useEffect(() => {
-    if (queue && queue.length > 0 && playingIndex > -1 && queue[playingIndex] && queue[playingIndex].id !== playingTrack?.id) {
+    const el = audioRef.current;
+    if (queue && queue.length > 0 && playingIndex > -1 && queue[playingIndex] && queue[playingIndex].id !== playingTrack?.id && el) {
+      el.pause();
       const currentTrack = queue[playingIndex];
       apiService.getPlayableUrl(currentTrack.id).then(response => {
         const track = response.data[0];
