@@ -12,7 +12,7 @@ import {StrictModeDroppable} from "@/components/shared/StrictModeDroppable";
 export default function QueueModal() {
   const {queueModal, queue, playingIndex} = useAppSelector(state => state.player);
   const [editing, setEditing] = useState(false);
-  const {token: {colorBgBase}} = theme.useToken();
+  const {token: {colorBgBase, colorPrimary}} = theme.useToken();
   const dispatch = useAppDispatch();
 
   return <div
@@ -34,7 +34,7 @@ export default function QueueModal() {
       <Button
         onClick={() => setEditing(!editing)}
         size={'large'}
-        shape={editing ? 'round': 'circle'}
+        shape={editing ? 'round' : 'circle'}
         type={'text'}
         icon={<FontAwesomeIcon icon={editing ? faTimes : faPen}/>}
       >
@@ -74,6 +74,11 @@ export default function QueueModal() {
                     ref={provided.innerRef}
                     {...provided.dragHandleProps}
                     {...provided.draggableProps}
+                    onClick={() => {
+                      dispatch(setPlayer({
+                        playingIndex: index,
+                      }))
+                    }}
                   >
                     <div
                       className={styles.artwork}
@@ -81,7 +86,7 @@ export default function QueueModal() {
                         backgroundImage: `url('${getTrackThumbnail(item)}')`
                       }}
                     />
-                    <div className={styles.itemMeta}>
+                    <div className={styles.itemMeta + ` ${playingIndex === index ? styles.active : ''}`}>
                       <Typography.Text className={styles.title}>
                         {item.title.text}
                       </Typography.Text>
@@ -90,13 +95,13 @@ export default function QueueModal() {
                       </Typography.Text>
                     </div>
                     <div className={styles.itemControls}>
-                      {editing ? (
+                      {!editing ? (
                         <FontAwesomeIcon icon={faBars}/>
-                      ): (
-                        <Button type={'text'} danger onClick={() => {
+                      ) : (
+                        <Button disabled={playingIndex === index} type={'text'} danger onClick={() => {
                           // Remove track from queue
                           dispatch(setPlayer({
-                            queue: queue.filter(x => x.id === item.id),
+                            queue: queue.filter(x => x.id !== item.id),
                           }))
                         }}>
                           <FontAwesomeIcon icon={faTrashCan}/>

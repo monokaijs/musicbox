@@ -63,6 +63,12 @@
       font-size: 12px;
       opacity: .8;
     }
+
+    &.active {
+      .title {
+        color: #faa800;
+      }
+    }
   }
 
   .itemControls {
