@@ -8,7 +8,12 @@ import playerSlice, {PlayerSliceState} from "@/redux/slices/player.slice";
 
 const combinedReducer = combineReducers({
   app: appSlice.reducer,
-  player: playerSlice.reducer,
+  player: persistReducer<any>({
+    key: 'music-box:player',
+    storage,
+    whitelist: ['repeatMode'],
+    stateReconciler: autoMergeLevel2,
+  }, playerSlice.reducer),
 });
 
 export const store = configureStore({
