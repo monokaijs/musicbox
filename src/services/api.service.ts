@@ -20,6 +20,12 @@ class ApiService {
     }) as Promise<any>
   }
 
+  getMultiplePlayableUrls(ids: string[]) {
+    return this.call('get-playable-url', {
+      ids: ids
+    }) as Promise<any>
+  }
+
   getTrack(id: string) {
     return this.call('get-track', {
       id: id,
