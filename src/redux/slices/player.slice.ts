@@ -14,6 +14,7 @@ export interface PlayerSliceState {
   loading: boolean;
   audioControlModal: boolean;
   volumeLevel: number;
+  queueModal: boolean;
 }
 
 const initialState: PlayerSliceState = {
@@ -27,6 +28,7 @@ const initialState: PlayerSliceState = {
   loading: true,
   audioControlModal: false,
   volumeLevel: 100,
+  queueModal: false,
 }
 
 type SetPlayerArgs<T> = {

@@ -4,6 +4,7 @@ import {Layout} from "antd";
 import {ReactNode} from "react";
 import PlayerModal from "@/components/app/PlayerModal";
 import AudioControlModal from "@/components/app/AudioControlModal";
+import QueueModal from "@/components/app/QueueModal";
 
 interface PlayerLayoutProps {
   children: ReactNode;
@@ -16,6 +17,7 @@ export default function PlayerLayout({children}: PlayerLayoutProps) {
         {children}
         <FooterPlayer/>
         <PlayerModal/>
+        <QueueModal/>
         <AudioControlModal/>
       </div>
     </Layout>

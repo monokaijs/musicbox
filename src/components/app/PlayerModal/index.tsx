@@ -158,7 +158,14 @@ export default function PlayerModal() {
         <a className={styles.small}>
           <FontAwesomeIcon icon={faShuffle}/>
         </a>
-        <a className={styles.small}>
+        <a
+          className={styles.small}
+          onClick={() => {
+            dispatch(setPlayer({
+              queueModal: true,
+            }));
+          }}
+        >
           <FontAwesomeIcon icon={faListUl}/>
         </a>
       </div>
