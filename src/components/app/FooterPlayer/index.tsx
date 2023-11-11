@@ -10,7 +10,7 @@ import {
   PlayCircleFilled,
   StepForwardFilled
 } from "@ant-design/icons";
-import {openPlayerModal} from "@/redux/slices/player.slice";
+import {nextTrack, openPlayerModal} from "@/redux/slices/player.slice";
 import {playerEl} from "@/components/providers/PlayerProvider";
 
 export default function FooterPlayer() {
@@ -63,6 +63,10 @@ export default function FooterPlayer() {
         size={'large'}
         icon={<StepForwardFilled/>}
         type={'text'}
+        onClick={(e) => {
+          e.stopPropagation();
+          dispatch(nextTrack())
+        }}
       />
     </div>
   </div>
