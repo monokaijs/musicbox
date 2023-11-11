@@ -141,15 +141,16 @@ export default function PlayerModal() {
         </a>
         <a
           className={styles.small}
-          style={{
-            color: repeatMode === RepeatMode.REPEAT_ALL || RepeatMode.REPEAT_ONE ? colorPrimary : undefined,
-          }}
           onClick={() => {
             let newMode = RepeatMode.FORWARD;
             if (repeatMode === RepeatMode.FORWARD) {
+              console.log('repeat all')
               newMode = RepeatMode.REPEAT_ALL;
             } else if (repeatMode === RepeatMode.REPEAT_ALL) {
+              console.log('repeat one')
               newMode = RepeatMode.REPEAT_ONE;
+            } else {
+              console.log('no repeat')
             }
 
             dispatch(setPlayer({
@@ -157,7 +158,12 @@ export default function PlayerModal() {
             }))
           }}
         >
-          <FontAwesomeIcon icon={faRepeat}/>
+          <FontAwesomeIcon
+            icon={faRepeat}
+            style={{
+              color: (repeatMode === RepeatMode.REPEAT_ALL || repeatMode === RepeatMode.REPEAT_ONE) ? colorPrimary : 'white',
+            }}
+          />
           {repeatMode === RepeatMode.REPEAT_ONE && <div
             className={styles.repeatOne}
             style={{
