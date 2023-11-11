@@ -1,7 +1,7 @@
 import {ReactNode, useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import apiService from "@/services/api.service";
-import {RepeatMode, setPlayer} from "@/redux/slices/player.slice";
+import {nextTrack, RepeatMode, setPlayer} from "@/redux/slices/player.slice";
 
 interface PlayerProviderProps {
   children: ReactNode;
@@ -38,15 +38,9 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
             }))
           } else if (repeatMode === RepeatMode.REPEAT_ONE) {
             el.currentTime = 0;
-            el.play();
-          } else {
-            // nothing
+            return el.play();
           }
-        } else {
-          dispatch(setPlayer({
-            playingIndex: playingIndex + 1,
-          }));
-        }
+        } else dispatch(nextTrack());
       };
       el.onpause = () => dispatch(setPlayer({paused: el.paused}));
       el.onplay = () => dispatch(setPlayer({paused: el.paused}));

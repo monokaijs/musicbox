@@ -22,6 +22,7 @@ export interface PlayerSliceState {
   volumeLevel: number;
   queueModal: boolean;
   repeatMode: RepeatMode;
+  shuffle: boolean;
 }
 
 const initialState: PlayerSliceState = {
@@ -37,6 +38,7 @@ const initialState: PlayerSliceState = {
   volumeLevel: 100,
   queueModal: false,
   repeatMode: RepeatMode.FORWARD,
+  shuffle: false,
 }
 
 type SetPlayerArgs<T> = {
@@ -48,12 +50,18 @@ const playerSlice = createSlice({
   initialState,
   reducers: {
     nextTrack: (state) => {
-      if (state.playingIndex === state.queue.length - 1) {
-        // go to first
-        state.playingIndex = 0;
+      if (state.shuffle) {
+        state.playingIndex = ~~(Math.random() * state.queue.length);
       } else {
-        state.playingIndex = state.playingIndex + 1;
+        if (state.playingIndex === state.queue.length - 1) {
+          // go to first
+          state.playingIndex = 0;
+        } else {
+          state.playingIndex = state.playingIndex + 1;
+        }
       }
+      state.currentTime = 0;
+      return state;
     },
     prevTrack: (state) => {
       if (state.playingIndex > 0) {
@@ -61,6 +69,8 @@ const playerSlice = createSlice({
       } else {
         state.playingIndex = state.queue.length - 1;
       }
+      state.currentTime = 0;
+      return state;
     },
     openPlayerModal: (state) => {
       state.openModal = true;

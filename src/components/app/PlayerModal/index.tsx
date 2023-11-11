@@ -29,7 +29,7 @@ export default function PlayerModal() {
   const dispatch = useAppDispatch();
   const [seekTime, setSeekTime] = useState(0);
   const [seeking, setSeeking] = useState(false);
-  const {openModal, queue, playingIndex, currentTime, paused, loading, repeatMode} = useAppSelector(state => state.player);
+  const {openModal, queue, playingIndex, currentTime, paused, loading, repeatMode, shuffle} = useAppSelector(state => state.player);
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
   const currentTrack = queue[playingIndex];
   const {token: {colorPrimary}} = theme.useToken();
@@ -144,13 +144,9 @@ export default function PlayerModal() {
           onClick={() => {
             let newMode = RepeatMode.FORWARD;
             if (repeatMode === RepeatMode.FORWARD) {
-              console.log('repeat all')
               newMode = RepeatMode.REPEAT_ALL;
             } else if (repeatMode === RepeatMode.REPEAT_ALL) {
-              console.log('repeat one')
               newMode = RepeatMode.REPEAT_ONE;
-            } else {
-              console.log('no repeat')
             }
 
             dispatch(setPlayer({
@@ -186,12 +182,11 @@ export default function PlayerModal() {
               return playerEl.play()
             } else return playerEl.pause();
           }}
+          style={{
+            opacity: loading ? .5 : 1,
+          }}
         >
-          {loading ? (
-            <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-          ): (
-            paused ? <PlayCircleFilled/> : <PauseCircleFilled/>
-          )}
+          {paused ? <PlayCircleFilled/> : <PauseCircleFilled/>}
         </a>
         <a
           className={styles.small}
@@ -199,7 +194,15 @@ export default function PlayerModal() {
         >
           <FontAwesomeIcon icon={faForwardStep}/>
         </a>
-        <a className={styles.small}>
+        <a
+          className={styles.small}
+          style={{
+            color: shuffle ? colorPrimary: undefined,
+          }}
+          onClick={() => dispatch(setPlayer({
+            shuffle: !shuffle,
+          }))}
+        >
           <FontAwesomeIcon icon={faShuffle}/>
         </a>
         <a
