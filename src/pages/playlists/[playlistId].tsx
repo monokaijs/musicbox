@@ -1,6 +1,6 @@
 import {useParams} from "next/navigation";
 import styles from "./Playlist.module.scss";
-import {Button, ConfigProvider, List, Spin, theme, Typography} from "antd";
+import {Button, ConfigProvider, List, message, Spin, theme, Typography} from "antd";
 import {
   ArrowLeftOutlined,
   BackwardOutlined,
@@ -15,9 +15,11 @@ import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import VerticalTracksList from "@/components/shared/VerticalTracksList";
 import {getPlaylistThumbnail} from "@/utils/player.utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronLeft, faList, faPlay, faShuffle} from "@fortawesome/free-solid-svg-icons";
+import {faChevronLeft, faList, faPlay, faPlus, faShuffle, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import apiService from "@/services/api.service";
 import {setPlayer} from "@/redux/slices/player.slice";
+import {removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
+import {enqueueTrack} from "@/redux/actions/player.actions";
 
 export default function Playlist() {
   const params = useParams();
@@ -113,6 +115,34 @@ export default function Playlist() {
       </div>
       <VerticalTracksList
         tracks={playlist?.tracks || []}
+        optionItems={[{
+          key: 'enqueue',
+          label: 'Add to queue',
+          icon: <FontAwesomeIcon icon={faPlus}/>,
+          onClick: (item: any) => {
+            dispatch(enqueueTrack({
+              track: item,
+              playNow: false,
+            }));
+          }
+        }, {
+          key: 'add-playlist',
+          label: 'Add to playlist',
+          icon: <FontAwesomeIcon icon={faList}/>
+        }, {
+          type: 'divider'
+        }, {
+          key: 'remove',
+          label: 'Remove from list',
+          danger: true,
+          icon: <FontAwesomeIcon icon={faTrashCan}/>,
+          onClick: (item: any) => {
+            dispatch(removeTrackFromPlaylist({
+              trackId: item.id,
+              playlistId: playlist?.id!,
+            }))
+          }
+        }]}
       />
     </div>
   </div>

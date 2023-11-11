@@ -1,19 +1,25 @@
 import styles from "@/styles/Search.module.scss";
 import apiService from "@/services/api.service";
 import playerService from "@/services/player.service";
-import {Button, List} from "antd";
+import {Button, Dropdown, List, Tooltip} from "antd";
 import {HeartFilled, HeartOutlined, PlusOutlined} from "@ant-design/icons";
 import {addTrackToPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {getTrackThumbnail} from "@/utils/player.utils";
 import {enqueueTrack} from "@/redux/actions/player.actions";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEllipsisVertical, faList, faPlay, faPlus, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import React from "react";
+import {setPlayer} from "@/redux/slices/player.slice";
+import {ItemType} from "antd/es/menu/hooks/useItems";
 
 interface VerticalTracksListProps {
   tracks: YouTubeTrack[];
   showFavorite?: boolean;
+  optionItems?: ItemType[];
 }
 
-export default function VerticalTracksList({tracks, showFavorite}: VerticalTracksListProps) {
+export default function VerticalTracksList({tracks, showFavorite, optionItems}: VerticalTracksListProps) {
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
   const favoriteTracks = favoritePlaylist?.tracks || [];
   const dispatch = useAppDispatch();
@@ -75,11 +81,41 @@ export default function VerticalTracksList({tracks, showFavorite}: VerticalTrack
                 }}
               />
             )}
-            <Button
-              icon={<PlusOutlined/>}
-              shape={'circle'}
-              type={'text'}
-            />
+            <div className={styles.itemRevealableControls}>
+              <Tooltip title={'Play now'}>
+                <Button
+                  onClick={() => {
+                    dispatch(setPlayer({
+                      queue: [item],
+                      playingIndex: 0,
+                    }))
+                  }}
+                  icon={<FontAwesomeIcon icon={faPlay}/>}
+                  shape={'circle'}
+                  type={'text'}
+                />
+              </Tooltip>
+              {optionItems && (
+                <Dropdown menu={{
+                  items: [
+                    ...optionItems.map((opt: any) => {
+                      return {
+                        ...opt,
+                        onClick: () => {
+                          if (opt && opt.onClick) opt.onClick(item);
+                        }
+                      }
+                    })
+                  ],
+                }} placement="bottomRight" arrow>
+                  <Button
+                    icon={<FontAwesomeIcon icon={faEllipsisVertical}/>}
+                    shape={'circle'}
+                    type={'text'}
+                  />
+                </Dropdown>
+              )}
+            </div>
           </div>
         </div>
       </>}}

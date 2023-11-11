@@ -2,6 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
 import {addTrackToPlaylist, createPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {enqueueTrack} from "@/redux/actions/player.actions";
+import {message} from "antd";
 
 export enum RepeatMode {
   FORWARD = 0,
@@ -98,6 +99,9 @@ const playerSlice = createSlice({
           state.playingIndex = state.queue.length - 1;
         }
       }
+      message.success("Added to queue").then(() => null);
+    }).addCase(enqueueTrack.rejected, (state, action) => {
+      message.error(action.error.message || "Failed to enqueue").then(() => null);
     });
   }
 });

@@ -80,4 +80,25 @@
 .searchResultItemControls {
   display: flex;
   align-items: center;
+
+  .itemRevealableControls {
+    width: 40px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    transition: all 300ms ease-in-out;
+  }
+
+}
+
+.searchResultItem {
+
+  &:hover {
+    .itemRevealableControls {
+      width: 80px;
+    }
+  }
 }

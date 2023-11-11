@@ -1,0 +1,15 @@
+.outer {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+
+  .item {
+    .artwork {
+      width: 120px;
+      aspect-ratio: 1;
+      background-size: cover;
+      background-position: center;
+      border-radius: 4px;
+    }
+  }
+}

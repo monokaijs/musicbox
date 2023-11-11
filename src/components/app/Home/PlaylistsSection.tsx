@@ -63,7 +63,7 @@ export default function PlaylistsSection() {
     <SectionTitle
       title={'Playlists'}
       extras={
-        <Button type={'text'}>Create</Button>
+        <Button href={'/playlists'} type={'text'}>All Playlists</Button>
       }
     />
     <div
