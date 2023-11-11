@@ -10,7 +10,7 @@ import {
   PauseCircleFilled,
   PlayCircleFilled
 } from "@ant-design/icons";
-import {closePlayerModal, RepeatMode, setPlayer} from "@/redux/slices/player.slice";
+import {closePlayerModal, nextTrack, prevTrack, RepeatMode, setPlayer} from "@/redux/slices/player.slice";
 import {useEffect, useState} from "react";
 import {addTrackToPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {playerEl} from "@/components/providers/PlayerProvider";
@@ -166,7 +166,10 @@ export default function PlayerModal() {
             }}
           >1</div>}
         </a>
-        <a className={styles.small}>
+        <a
+          className={styles.small}
+          onClick={() => dispatch(prevTrack())}
+        >
           <FontAwesomeIcon icon={faBackwardStep}/>
         </a>
         <a
@@ -184,7 +187,10 @@ export default function PlayerModal() {
             paused ? <PlayCircleFilled/> : <PauseCircleFilled/>
           )}
         </a>
-        <a className={styles.small}>
+        <a
+          className={styles.small}
+          onClick={() => dispatch(nextTrack())}
+        >
           <FontAwesomeIcon icon={faForwardStep}/>
         </a>
         <a className={styles.small}>

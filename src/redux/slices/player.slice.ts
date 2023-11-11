@@ -47,6 +47,21 @@ const playerSlice = createSlice({
   name: 'player',
   initialState,
   reducers: {
+    nextTrack: (state) => {
+      if (state.playingIndex === state.queue.length - 1) {
+        // go to first
+        state.playingIndex = 0;
+      } else {
+        state.playingIndex = state.playingIndex + 1;
+      }
+    },
+    prevTrack: (state) => {
+      if (state.playingIndex > 0) {
+        state.playingIndex = state.playingIndex - 1;
+      } else {
+        state.playingIndex = state.queue.length - 1;
+      }
+    },
     openPlayerModal: (state) => {
       state.openModal = true;
       return state;
@@ -77,6 +92,9 @@ const playerSlice = createSlice({
   }
 });
 
-export const {openPlayerModal, closePlayerModal, setPlayer} = playerSlice.actions;
+export const {
+  openPlayerModal, closePlayerModal, setPlayer,
+  nextTrack, prevTrack,
+} = playerSlice.actions;
 
 export default playerSlice;
