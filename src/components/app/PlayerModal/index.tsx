@@ -1,30 +1,38 @@
 import styles from "./styles.module.scss";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {formatTime, getTrackThumbnail} from "@/utils/player.utils";
-import {Button, ConfigProvider, Divider, Slider, Spin, Typography} from "antd";
+import {Button, ConfigProvider, Slider, Spin, theme, Typography} from "antd";
 import {
-  CaretDownOutlined,
   CloseOutlined,
   HeartFilled,
-  HeartOutlined, LoadingOutlined,
-  PauseCircleFilled, PlayCircleFilled, RetweetOutlined, RollbackOutlined, SoundOutlined,
-  StepBackwardFilled, StepForwardFilled, UnorderedListOutlined
+  HeartOutlined,
+  LoadingOutlined,
+  PauseCircleFilled,
+  PlayCircleFilled
 } from "@ant-design/icons";
-import {closePlayerModal, setPlayer} from "@/redux/slices/player.slice";
+import {closePlayerModal, RepeatMode, setPlayer} from "@/redux/slices/player.slice";
 import {useEffect, useState} from "react";
 import {addTrackToPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {playerEl} from "@/components/providers/PlayerProvider";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBackwardStep, faForwardStep, faHeadphones, faListUl, faRepeat, faShuffle} from "@fortawesome/free-solid-svg-icons";
+import {
+  faBackwardStep,
+  faForwardStep,
+  faHeadphones,
+  faListUl,
+  faRepeat,
+  faShuffle
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function PlayerModal() {
   const [isFavorite, setIsFavorite] = useState(false);
   const dispatch = useAppDispatch();
   const [seekTime, setSeekTime] = useState(0);
   const [seeking, setSeeking] = useState(false);
-  const {openModal, queue, playingIndex, currentTime, paused, loading} = useAppSelector(state => state.player);
+  const {openModal, queue, playingIndex, currentTime, paused, loading, repeatMode} = useAppSelector(state => state.player);
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
   const currentTrack = queue[playingIndex];
+  const {token: {colorPrimary}} = theme.useToken();
 
   useEffect(() => {
     const favoriteTracks = favoritePlaylist?.tracks || [];
@@ -131,8 +139,32 @@ export default function PlayerModal() {
         }}>
           <FontAwesomeIcon icon={faHeadphones}/>
         </a>
-        <a className={styles.small}>
+        <a
+          className={styles.small}
+          style={{
+            color: repeatMode === RepeatMode.REPEAT_ALL || RepeatMode.REPEAT_ONE ? colorPrimary : undefined,
+          }}
+          onClick={() => {
+            let newMode = RepeatMode.FORWARD;
+            if (repeatMode === RepeatMode.FORWARD) {
+              newMode = RepeatMode.REPEAT_ALL;
+            } else if (repeatMode === RepeatMode.REPEAT_ALL) {
+              newMode = RepeatMode.REPEAT_ONE;
+            }
+
+            dispatch(setPlayer({
+              repeatMode: newMode,
+            }))
+          }}
+        >
           <FontAwesomeIcon icon={faRepeat}/>
+          {repeatMode === RepeatMode.REPEAT_ONE && <div
+            className={styles.repeatOne}
+            style={{
+              backgroundColor: colorPrimary,
+              color: 'white'
+            }}
+          >1</div>}
         </a>
         <a className={styles.small}>
           <FontAwesomeIcon icon={faBackwardStep}/>

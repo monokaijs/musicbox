@@ -3,6 +3,12 @@ import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
 import {addTrackToPlaylist, createPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {enqueueTrack} from "@/redux/actions/player.actions";
 
+export enum RepeatMode {
+  FORWARD = 0,
+  REPEAT_ALL = 1,
+  REPEAT_ONE = 2,
+}
+
 export interface PlayerSliceState {
   playerState: number,
   queue: YouTubeTrack[];
@@ -15,6 +21,7 @@ export interface PlayerSliceState {
   audioControlModal: boolean;
   volumeLevel: number;
   queueModal: boolean;
+  repeatMode: RepeatMode;
 }
 
 const initialState: PlayerSliceState = {
@@ -29,6 +36,7 @@ const initialState: PlayerSliceState = {
   audioControlModal: false,
   volumeLevel: 100,
   queueModal: false,
+  repeatMode: RepeatMode.FORWARD,
 }
 
 type SetPlayerArgs<T> = {

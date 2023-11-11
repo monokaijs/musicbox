@@ -1,7 +1,7 @@
-import {createContext, ReactNode, useEffect, useRef, useState} from "react";
+import {ReactNode, useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import apiService from "@/services/api.service";
-import {setPlayer} from "@/redux/slices/player.slice";
+import {RepeatMode, setPlayer} from "@/redux/slices/player.slice";
 
 interface PlayerProviderProps {
   children: ReactNode;
@@ -12,7 +12,7 @@ export let playerEl: HTMLAudioElement | null = null;
 export default function PlayerProvider({children}: PlayerProviderProps) {
   const dispatch = useAppDispatch();
   const [playingTrack, setPlayingTrack] = useState<YouTubeTrack | null>(null);
-  const {playerState, queue, playingIndex, currentTime, shouldUpdateBySeek, volumeLevel} = useAppSelector(state => state.player);
+  const {repeatMode, queue, playingIndex, currentTime, shouldUpdateBySeek, volumeLevel} = useAppSelector(state => state.player);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -29,6 +29,25 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
           currentTime: el.currentTime
         }))
       }
+      el.onended = () => {
+        if (playingIndex === queue.length - 1) {
+          if (repeatMode === RepeatMode.REPEAT_ALL) {
+            // Go to begin of the queue
+            dispatch(setPlayer({
+              playingIndex: 0,
+            }))
+          } else if (repeatMode === RepeatMode.REPEAT_ONE) {
+            el.currentTime = 0;
+            el.play();
+          } else {
+            // nothing
+          }
+        } else {
+          dispatch(setPlayer({
+            playingIndex: playingIndex + 1,
+          }));
+        }
+      };
       el.onpause = () => dispatch(setPlayer({paused: el.paused}));
       el.onplay = () => dispatch(setPlayer({paused: el.paused}));
       el.onplaying = () => dispatch(setPlayer({paused: el.paused}));

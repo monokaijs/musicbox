@@ -102,11 +102,27 @@
       .small {
         font-size: 20px;
         color: white;
+        position: relative;
+
+        .repeatOne {
+          display: flex;
+          position: absolute;
+          bottom: -4px;
+          right: -4px;
+          width: 14px; height: 14px;
+          border-radius: 50%;
+          font-size: 12px;
+          font-weight: 500;
+          align-items: center;
+          justify-content: center;
+          background-color: white;
+        }
       }
       .large {
         font-size: 48px;
         color: white;
       }
+
     }
   }
 
