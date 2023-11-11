@@ -36,10 +36,26 @@ export default function Playlist() {
   const enqueuePlaylist = async () => {
     setLoading(true);
     dispatch(setPlayer({
-      queue: playlist?.tracks || []
+      queue: playlist?.tracks || [],
+      playingIndex: 0,
     }));
 
     setLoading(false);
+  }
+
+  const shufflePlaylist = async () => {
+    // shuffle before enqueue
+    let array = [...(playlist?.tracks || [])];
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    dispatch(setPlayer({
+      queue: array,
+      playingIndex: 0,
+    }));
   }
 
   return <div className={styles.outer}>
@@ -92,6 +108,7 @@ export default function Playlist() {
           type={'text'}
           shape={'circle'}
           icon={<FontAwesomeIcon icon={faShuffle}/>}
+          onClick={shufflePlaylist}
         />
       </div>
       <VerticalTracksList
