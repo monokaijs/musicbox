@@ -2,7 +2,7 @@ import styles from "./QueueModal.module.scss";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {Button, Checkbox, List, theme, Typography} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChevronDown, faPen, faPlay, faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faChevronDown, faPen, faPlay, faSort, faTimes, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {getTrackThumbnail} from "@/utils/player.utils";
 import {useState} from "react";
 import {setPlayer} from "@/redux/slices/player.slice";
@@ -34,10 +34,12 @@ export default function QueueModal() {
       <Button
         onClick={() => setEditing(!editing)}
         size={'large'}
-        shape={'circle'}
+        shape={editing ? 'round': 'circle'}
         type={'text'}
         icon={<FontAwesomeIcon icon={editing ? faTimes : faPen}/>}
-      />
+      >
+        {editing && "Cancel"}
+      </Button>
     </div>
     <div className={styles.meta}>
       <Typography.Title level={3} className={styles.title}>
@@ -48,11 +50,13 @@ export default function QueueModal() {
       <DragDropContext
         onDragEnd={(result, provided) => {
           if (!result.destination) return;
+          if (result.source.index === result.destination.index) return;
           const newQueue = [...queue];
           const [removed] = newQueue.splice(result.source.index, 1);
           newQueue.splice(result.destination.index, 0, removed);
           dispatch(setPlayer({
             queue: newQueue,
+            playingIndex: result.destination.index === playingIndex ? result.source.index : result.source.index === playingIndex ? result.destination.index : playingIndex,
           }))
         }}
       >
@@ -84,6 +88,20 @@ export default function QueueModal() {
                       <Typography.Text className={styles.author}>
                         {item.author.name}
                       </Typography.Text>
+                    </div>
+                    <div className={styles.itemControls}>
+                      {editing ? (
+                        <FontAwesomeIcon icon={faBars}/>
+                      ): (
+                        <Button type={'text'} danger onClick={() => {
+                          // Remove track from queue
+                          dispatch(setPlayer({
+                            queue: queue.filter(x => x.id === item.id),
+                          }))
+                        }}>
+                          <FontAwesomeIcon icon={faTrashCan}/>
+                        </Button>
+                      )}
                     </div>
                   </div>
                 )}

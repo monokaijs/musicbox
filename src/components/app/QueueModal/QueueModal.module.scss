@@ -42,20 +42,31 @@
   padding: 8px 32px;
   gap: 16px;
   align-items: center;
+  min-width: 0;
 
   .itemMeta {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    flex: 1;
 
     .title {
       font-weight: 600;
       font-size: 13px;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .author {
       font-size: 12px;
       opacity: .8;
     }
+  }
+
+  .itemControls {
+    color: #ffffff44;
   }
 
   .artwork {

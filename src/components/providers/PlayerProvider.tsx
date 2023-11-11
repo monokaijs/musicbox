@@ -11,6 +11,7 @@ export let playerEl: HTMLAudioElement | null = null;
 
 export default function PlayerProvider({children}: PlayerProviderProps) {
   const dispatch = useAppDispatch();
+  const [playingTrack, setPlayingTrack] = useState<YouTubeTrack | null>(null);
   const {playerState, queue, playingIndex, currentTime, shouldUpdateBySeek, volumeLevel} = useAppSelector(state => state.player);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -37,14 +38,16 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
   }, [audioRef.current]);
 
   useEffect(() => {
-    if (queue && queue.length > 0 && playingIndex > -1 && queue[playingIndex]) {
+    if (queue && queue.length > 0 && playingIndex > -1 && queue[playingIndex] && queue[playingIndex].id !== playingTrack?.id) {
       const currentTrack = queue[playingIndex];
       apiService.getPlayableUrl(currentTrack.id).then(response => {
         const track = response.data[0];
         const url = track.url;
         if (!audioRef.current) return;
         audioRef.current.src = url;
-        audioRef.current.play().then(() => null);
+        audioRef.current.play().then(() => {
+          setPlayingTrack(track);
+        });
       });
     }
   }, [queue, playingIndex]);
