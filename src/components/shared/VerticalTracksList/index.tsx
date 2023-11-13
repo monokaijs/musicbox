@@ -81,7 +81,7 @@ export default function VerticalTracksList({tracks, showFavorite, optionItems}: 
                 }}
               />
             )}
-            <div className={styles.itemRevealableControls}>
+            <div className={optionItems ? styles.itemRevealableControls: ''}>
               <Tooltip title={'Play now'}>
                 <Button
                   onClick={() => {

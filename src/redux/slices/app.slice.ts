@@ -10,6 +10,7 @@ export interface AppSliceState {
     showModal: boolean;
   };
   searchHistory: string[];
+  playHistory: YouTubeTrack[];
 }
 
 const initialState: AppSliceState = {
@@ -25,6 +26,7 @@ const initialState: AppSliceState = {
   addToPlaylistModal: {
     showModal: false,
   },
+  playHistory: [],
 }
 
 const appSlice = createSlice({
@@ -64,6 +66,11 @@ const appSlice = createSlice({
         }
         return playlist;
       })
+    }).addCase(enqueueTrack.fulfilled, (state, action) => {
+      state.playHistory = [
+        action.payload.track,
+        ...state.playHistory.filter((x) => x.id !== action.payload.track.id),
+      ].filter((x, i) => i < 20) // only save 20 last tracks
     });
   }
 });

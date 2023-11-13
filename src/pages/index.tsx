@@ -5,6 +5,7 @@ import SearchInput from "@/components/shared/SearchInput";
 import ExploreSection from "@/components/app/Home/ExploreSection";
 import PlaylistsSection from "@/components/app/Home/PlaylistsSection";
 import PlayerProvider from "@/components/providers/PlayerProvider";
+import PlayHistorySection from "@/components/app/Home/PlayHistorySection";
 
 export default function Home() {
 
@@ -18,6 +19,7 @@ export default function Home() {
       </div>
       <ExploreSection/>
       <PlaylistsSection/>
+      <PlayHistorySection/>
     </Layout>
   )
 }
