@@ -79,7 +79,7 @@
 
 .searchResultItemTimer {
   font-size: 11px;
-  opacity: .8;
+  opacity: .5;
 }
 
 .searchResultItemControls {
@@ -103,7 +103,7 @@
 
   &:hover {
     .itemRevealableControls {
-      width: 80px;
+      width: 70px;
     }
   }
 }

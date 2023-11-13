@@ -5,6 +5,10 @@ import {enqueueTrack} from "@/redux/actions/player.actions";
 export interface AppSliceState {
   playlists: Playlist[];
   createPlaylistModal: boolean;
+  addToPlaylistModal: {
+    track?: YouTubeTrack;
+    showModal: boolean;
+  };
   searchHistory: string[];
 }
 
@@ -18,6 +22,9 @@ const initialState: AppSliceState = {
   }],
   createPlaylistModal: false,
   searchHistory: [],
+  addToPlaylistModal: {
+    showModal: false,
+  },
 }
 
 const appSlice = createSlice({

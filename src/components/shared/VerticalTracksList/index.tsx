@@ -5,7 +5,7 @@ import {Button, Dropdown, List, Tooltip} from "antd";
 import {HeartFilled, HeartOutlined, PlusOutlined} from "@ant-design/icons";
 import {addTrackToPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
-import {getTrackThumbnail} from "@/utils/player.utils";
+import {formatTime, getTrackThumbnail} from "@/utils/player.utils";
 import {enqueueTrack} from "@/redux/actions/player.actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisVertical, faList, faPlay, faPlus, faTrashCan} from "@fortawesome/free-solid-svg-icons";
@@ -52,7 +52,7 @@ export default function VerticalTracksList({tracks, showFavorite, optionItems}: 
                 {item.title?.text}
               </div>
               <div className={styles.searchResultItemTimer}>
-                {item.duration.text}
+                {formatTime(item.duration.seconds || 0)}
               </div>
             </div>
           </div>
