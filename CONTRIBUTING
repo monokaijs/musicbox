@@ -1,0 +1,45 @@
+# Contributing to MusicBox
+
+👍🎉 First off, thanks for taking the time to contribute! 🎉👍
+
+The following is a set of guidelines for contributing to MusicBox. These are just guidelines, not rules, so use your best judgment and feel free to propose changes to this document in a pull request.
+
+## Code of Conduct
+
+This project and everyone participating in it are governed by the [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [contact@musicbox.com].
+
+## How Can I Contribute?
+
+### Reporting Bugs
+
+- Before creating a bug report, check if the issue has already been reported in the [GitHub issues](https://github.com/monokaijs/musicbox/issues).
+- If you're unable to find an open issue addressing the problem, open a new one. Be sure to include a clear title and description, as much relevant information as possible, and steps to reproduce the issue.
+
+### Suggesting Enhancements
+
+- Before creating a feature request, check if it has already been suggested in the [GitHub issues](https://github.com/monokaijs/musicbox/issues).
+- If you don't find an open issue related to your suggestion, feel free to open a new one. Clearly describe the feature you'd like to see, and discuss it with the community.
+
+### Pull Requests
+
+- Before you start working on an issue, make sure it's assigned to you or that you let others know you're working on it to avoid duplication of efforts.
+- Fork the repository, create a branch, and work on your changes.
+- Ensure your code follows the project's coding standards.
+- Make your pull request informative, including a clear title and description of your changes.
+- Be open to feedback and be willing to make changes if necessary.
+
+## Development Setup
+
+1. Fork the repository and clone your fork locally.
+2. Install dependencies: `npm install`
+3. Create a feature branch: `git checkout -b feature-xyz`
+4. Make your changes and test thoroughly.
+5. Commit your changes: `git commit -m "Add new feature"`
+6. Push to your fork: `git push origin feature-xyz`
+7. Create a pull request to the `main` branch of the original repository.
+
+## License
+
+By contributing to MusicBox, you agree that your contributions will be licensed under the [MIT License](LICENSE).
+
+Happy contributing! 🚀
