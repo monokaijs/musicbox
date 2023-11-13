@@ -1,40 +1,92 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MusicBox
+
+MusicBox is an open-source music player built on Next.js that allows you to play MP3 files and stream tracks from YouTube. With features like playlists, favorites, real-time listening with PeerJS, YouTube video playback, search functionality, and robust track organization, MusicBox provides a full-featured music player experience.
+
+Crafted with <3 by [@delimister](https://delimister.com) a.k.a @monokaijs
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Before you begin, make sure you have the following installed:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Node.js
+- npm (Node Package Manager)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Installation
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. Clone the repository:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+   ```bash
+   git clone https://github.com/monokaijs/musicbox.git
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. Navigate to the project directory:
 
-## Learn More
+   ```bash
+   cd musicbox
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. Install dependencies:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Usage
 
-## Deploy on Vercel
+1. Start the Next.js development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2. Open your browser and navigate to [http://localhost:3000](http://localhost:3000) to use MusicBox.
+
+## Features
+
+### Playlists
+
+Create and manage playlists for a customized listening experience.
+
+### Favorites
+
+Mark your favorite tracks for quick access.
+
+### Real-time Listening
+
+Enjoy tracks together with friends in real-time using PeerJS.
+
+### YouTube Integration
+
+Listen to your favorite tracks directly from YouTube videos.
+
+### Search
+
+Efficiently find and discover new tracks with the built-in search functionality.
+
+### Organizing Tracks
+
+Organize your music library with ease, ensuring a seamless listening experience.
+
+### Full Controls
+
+MusicBox provides full controls as a comprehensive music player, giving you command over playback and settings.
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+Special thanks to the open-source community for their continuous support and contributions.
+
+## Contact
+
+For any inquiries or issues, please open an [issue](https://github.com/monokaijs/musicbox/issues) on GitHub.
+
+Enjoy MusicBox! 🎵🎧
