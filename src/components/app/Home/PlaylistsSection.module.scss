@@ -8,6 +8,10 @@
   user-select: none;
   cursor: grab;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &:active {
     cursor: grabbing;
   }
@@ -23,6 +27,7 @@
   overflow: hidden;
   position: relative;
   cursor: pointer;
+  margin-right: 16px;
 
   .playlistImageWrapper {
     position: absolute;

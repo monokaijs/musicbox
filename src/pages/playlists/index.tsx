@@ -1,30 +1,90 @@
 import React from "react";
-import {useAppSelector} from "@/redux/hooks";
-import {List, Typography} from "antd";
+import {useAppDispatch, useAppSelector} from "@/redux/hooks";
+import {Button, Col, Dropdown, List, Row, Typography} from "antd";
 import styles from "./Playlists.module.scss";
-import {getPlaylistThumbnail} from "@/utils/player.utils";
+import {getPlaylistDescription, getPlaylistThumbnail} from "@/utils/player.utils";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEllipsisVertical, faPen, faPlus, faTrashCan} from "@fortawesome/free-solid-svg-icons";
+import {router} from "next/client";
+import GoBack from "@/components/shared/GoBack";
+import {setApp} from "@/redux/slices/app.slice";
 
 export default function Playlists() {
+  const dispatch = useAppDispatch();
   const {playlists} = useAppSelector(state => state.app);
+
+
   return <div className={styles.outer}>
-    <Typography.Title>
-      Playlists
-    </Typography.Title>
-    <List
-      dataSource={playlists || []}
-      renderItem={(item) => {
-        return <div className={styles.item}>
+    <div className={styles.header}>
+      <GoBack/>
+      <Typography.Title className={styles.title} level={2}>
+        Playlists
+      </Typography.Title>
+      <Button
+        type={'text'}
+        icon={<FontAwesomeIcon icon={faPlus}/>}
+        onClick={() => dispatch(setApp({
+          createPlaylistModal: true,
+        }))}
+      >
+        Create
+      </Button>
+    </div>
+    <Row className={styles.list} gutter={[24, 24]}>
+      {playlists.map((item: Playlist) => (
+        <Col key={item.id} span={8}>
           <div
-            className={styles.artwork}
-            style={{
-              backgroundImage: `url('${getPlaylistThumbnail(item)}')`
-            }}
-          />
-          <Typography.Text>
-            {item.name}
-          </Typography.Text>
-        </div>
-      }}
-    />
+            className={styles.item}
+            onClick={() => router.push('/playlists/' + item.id + '/')}
+          >
+            <div
+              className={styles.artwork}
+              style={{
+                backgroundImage: `url('${getPlaylistThumbnail(item)}')`
+              }}
+            />
+            <div className={styles.meta}>
+              <div className={styles.info}>
+                <Typography.Text className={styles.name}>
+                  {item.name}
+                </Typography.Text>
+                <Typography.Text className={styles.authors}>
+                  {getPlaylistDescription(item)}
+                </Typography.Text>
+              </div>
+              <div className={styles.controls}>
+                <Dropdown
+                  menu={{
+                    items: [{
+                      key: 'edit',
+                      icon: <FontAwesomeIcon icon={faPen}/>,
+                      label: 'Edit'
+                    }, {
+                      type: 'divider'
+                    }, {
+                      key: 'delete',
+                      icon: <FontAwesomeIcon icon={faTrashCan}/>,
+                      label: 'Delete',
+                      danger: true,
+                      disabled: item.systemPlaylist
+                    }]
+                  }}
+                >
+                  <Button
+                    onClick={e => {
+                      e.stopPropagation();
+                    }}
+                    size={'small'}
+                    type={'text'}
+                    shape={'circle'}
+                    icon={<FontAwesomeIcon icon={faEllipsisVertical}/>}
+                  />
+                </Dropdown>
+              </div>
+            </div>
+          </div>
+        </Col>
+      ))}
+    </Row>
   </div>
 }

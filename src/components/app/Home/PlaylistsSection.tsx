@@ -63,7 +63,9 @@ export default function PlaylistsSection() {
     <SectionTitle
       title={'Playlists'}
       extras={
-        <Button href={'/playlists'} type={'text'}>All Playlists</Button>
+        <Button onClick={() => {
+          return router.push('/playlists');
+        }} type={'text'}>All Playlists</Button>
       }
     />
     <div

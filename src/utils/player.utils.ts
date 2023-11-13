@@ -21,3 +21,7 @@ export function formatTime(seconds: number) {
 
   return `${formattedMinutes}:${formattedSeconds}`;
 }
+
+export const getPlaylistDescription = (playlist: Playlist) => {
+  return playlist.tracks.filter((x, i) => i < 2).map(t => t.author.name).join(', ');
+}

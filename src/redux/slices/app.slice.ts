@@ -1,4 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
 import {addTrackToPlaylist, createPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {enqueueTrack} from "@/redux/actions/player.actions";
@@ -6,6 +6,7 @@ import {enqueueTrack} from "@/redux/actions/player.actions";
 export interface AppSliceState {
   favoriteTracks: YouTubeTrack[];
   playlists: Playlist[];
+  createPlaylistModal: boolean;
 }
 
 const initialState: AppSliceState = {
@@ -17,12 +18,21 @@ const initialState: AppSliceState = {
     systemPlaylist: true,
     artwork: '',
   }],
+  createPlaylistModal: false,
 }
 
 const appSlice = createSlice({
   name: 'app',
   initialState,
-  reducers: {},
+  reducers: {
+    setApp(state, action: PayloadAction<Optional<AppSliceState>>) {
+      state = {
+        ...state,
+        ...action.payload,
+      }
+      return state;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(createPlaylist.fulfilled, (state, action) => {
       state.playlists = [
@@ -52,6 +62,6 @@ const appSlice = createSlice({
   }
 });
 
-export const {} = appSlice.actions;
+export const {setApp} = appSlice.actions;
 
 export default appSlice;

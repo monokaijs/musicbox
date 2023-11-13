@@ -20,6 +20,7 @@ import apiService from "@/services/api.service";
 import {setPlayer} from "@/redux/slices/player.slice";
 import {removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {enqueueTrack} from "@/redux/actions/player.actions";
+import GoBack from "@/components/shared/GoBack";
 
 export default function Playlist() {
   const params = useParams();
@@ -70,15 +71,7 @@ export default function Playlist() {
       <div
         className={styles.figure}
       />
-      <Button
-        className={styles.backButton}
-        icon={<FontAwesomeIcon icon={faChevronLeft}/>}
-        shape={'round'}
-        size={'large'}
-        onClick={() => router.back()}
-      >
-        Go Back
-      </Button>
+      <GoBack/>
       <div className={styles.playlistMeta}>
         <Typography.Title level={2} className={styles.title}>
           {playlist?.name}

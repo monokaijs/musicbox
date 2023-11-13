@@ -42,10 +42,6 @@ const initialState: PlayerSliceState = {
   shuffle: false,
 }
 
-type SetPlayerArgs<T> = {
-  [K in keyof T]?: T[K];
-}
-
 const playerSlice = createSlice({
   name: 'player',
   initialState,
@@ -81,7 +77,7 @@ const playerSlice = createSlice({
       state.openModal = false;
       return state;
     },
-    setPlayer(state, action: PayloadAction<SetPlayerArgs<PlayerSliceState>>) {
+    setPlayer(state, action: PayloadAction<Optional<PlayerSliceState>>) {
       return {
         ...state,
         ...action.payload,
