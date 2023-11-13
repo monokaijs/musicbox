@@ -1,5 +1,4 @@
 import Peer, {DataConnection, MediaConnection} from "peerjs";
-import {v4 as uuid} from 'uuid';
 import {generateUsername} from "unique-username-generator";
 
 type OnConnectionListener = (conn: DataConnection, isIncoming: boolean) => any;

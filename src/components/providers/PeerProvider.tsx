@@ -7,6 +7,7 @@ import {RootState, store} from "@/redux/store";
 import {DataConnection} from "peerjs";
 import {message} from "antd";
 import {setPlayer} from "@/redux/slices/player.slice";
+import {playerEl} from "@/components/providers/PlayerProvider";
 
 interface PeerProviderProps {
 }
@@ -44,6 +45,10 @@ export default function PeerProvider({}: PeerProviderProps) {
           playingIndex: data.data.playingIndex,
           paused: data.data.paused,
         }));
+      }
+      if (data.action === 'seek' && playerEl) {
+        console.log('seek', data);
+        playerEl.currentTime = data.data;
       }
     })
     peerService.onConnection.addListener(conn => {

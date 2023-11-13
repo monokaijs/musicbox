@@ -29,6 +29,7 @@ export default function PlayerModal() {
   const dispatch = useAppDispatch();
   const [seekTime, setSeekTime] = useState(0);
   const [seeking, setSeeking] = useState(false);
+  const {connect} = useAppSelector(state => state);
   const {openModal, queue, playingIndex, currentTime, paused, loading, repeatMode, shuffle} = useAppSelector(state => state.player);
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
   const currentTrack = queue[playingIndex];
@@ -109,16 +110,24 @@ export default function PlayerModal() {
           tooltip={{
             formatter: (value) => formatTime(value || 0),
           }}
+          disabled={connect.connected && connect.roomConnected && !connect.isHost}
           onChange={value => {
             setSeeking(true);
             setSeekTime(value);
           }}
-          onAfterChange={value => {
+          onAfterChange={async value => {
             setSeeking(false);
             dispatch(setPlayer({
               currentTime: value,
               shouldUpdateBySeek: true,
-            }))
+            }));
+            const peerService = (await import('@/services/peer.service')).default;
+            if (connect.roomConnected && connect.isHost) {
+              peerService.sendAll({
+                action: 'seek',
+                data: value,
+              });
+            }
           }}
         />
       </ConfigProvider>

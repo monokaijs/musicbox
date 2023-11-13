@@ -5,14 +5,15 @@ import styles from "./Playlists.module.scss";
 import {getPlaylistDescription, getPlaylistThumbnail} from "@/utils/player.utils";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisVertical, faPen, faPlus, faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import {router} from "next/client";
 import GoBack from "@/components/shared/GoBack";
 import {setApp} from "@/redux/slices/app.slice";
+import {useRouter} from "next/router";
 
 export default function Playlists() {
   const dispatch = useAppDispatch();
   const {playlists} = useAppSelector(state => state.app);
   const {queue} = useAppSelector(state => state.player);
+  const router = useRouter();
 
 
   return <div className={styles.outer}>
