@@ -30,67 +30,69 @@ export default function Playlists() {
         Create
       </Button>
     </div>
-    <Row className={styles.list} gutter={[24, 24]}>
-      {playlists.map((item: Playlist) => (
-        <Col key={item.id} span={8}>
-          <div
-            className={styles.item}
-            onClick={() => router.push('/playlists/' + item.id + '/')}
-          >
+    <div className={styles.content}>
+      <Row className={styles.list} gutter={[24, 24]}>
+        {playlists.map((item: Playlist) => (
+          <Col key={item.id} span={8}>
             <div
-              className={styles.artwork}
-              style={{
-                backgroundImage: `url('${getPlaylistThumbnail(item)}')`
-              }}
-            />
-            <div className={styles.meta}>
-              <div className={styles.info}>
-                <Typography.Text className={styles.name}>
-                  {item.name}
-                </Typography.Text>
-                <Typography.Text className={styles.authors}>
-                  {getPlaylistDescription(item)}
-                </Typography.Text>
-              </div>
-              <div className={styles.controls}>
-                <Dropdown
-                  menu={{
-                    items: [{
-                      key: 'edit',
-                      icon: <FontAwesomeIcon icon={faPen}/>,
-                      label: 'Edit'
-                    }, {
-                      type: 'divider'
-                    }, {
-                      key: 'delete',
-                      icon: <FontAwesomeIcon icon={faTrashCan}/>,
-                      label: 'Delete',
-                      danger: true,
-                      disabled: item.systemPlaylist,
-                      onClick: e => {
-                        e.domEvent.stopPropagation();
-                        dispatch(setApp({
-                          playlists: playlists.filter(x => x.id !== item.id),
-                        }))
-                      }
-                    }]
-                  }}
-                >
-                  <Button
-                    onClick={e => {
-                      e.stopPropagation();
+              className={styles.item}
+              onClick={() => router.push('/playlists/' + item.id + '/')}
+            >
+              <div
+                className={styles.artwork}
+                style={{
+                  backgroundImage: `url('${getPlaylistThumbnail(item)}')`
+                }}
+              />
+              <div className={styles.meta}>
+                <div className={styles.info}>
+                  <Typography.Text className={styles.name}>
+                    {item.name}
+                  </Typography.Text>
+                  <Typography.Text className={styles.authors}>
+                    {getPlaylistDescription(item)}
+                  </Typography.Text>
+                </div>
+                <div className={styles.controls}>
+                  <Dropdown
+                    menu={{
+                      items: [{
+                        key: 'edit',
+                        icon: <FontAwesomeIcon icon={faPen}/>,
+                        label: 'Edit'
+                      }, {
+                        type: 'divider'
+                      }, {
+                        key: 'delete',
+                        icon: <FontAwesomeIcon icon={faTrashCan}/>,
+                        label: 'Delete',
+                        danger: true,
+                        disabled: item.systemPlaylist,
+                        onClick: e => {
+                          e.domEvent.stopPropagation();
+                          dispatch(setApp({
+                            playlists: playlists.filter(x => x.id !== item.id),
+                          }))
+                        }
+                      }]
                     }}
-                    size={'small'}
-                    type={'text'}
-                    shape={'circle'}
-                    icon={<FontAwesomeIcon icon={faEllipsisVertical}/>}
-                  />
-                </Dropdown>
+                  >
+                    <Button
+                      onClick={e => {
+                        e.stopPropagation();
+                      }}
+                      size={'small'}
+                      type={'text'}
+                      shape={'circle'}
+                      icon={<FontAwesomeIcon icon={faEllipsisVertical}/>}
+                    />
+                  </Dropdown>
+                </div>
               </div>
             </div>
-          </div>
-        </Col>
-      ))}
-    </Row>
+          </Col>
+        ))}
+      </Row>
+    </div>
   </div>
 }
