@@ -66,7 +66,13 @@ export default function Playlists() {
                       icon: <FontAwesomeIcon icon={faTrashCan}/>,
                       label: 'Delete',
                       danger: true,
-                      disabled: item.systemPlaylist
+                      disabled: item.systemPlaylist,
+                      onClick: e => {
+                        e.domEvent.stopPropagation();
+                        dispatch(setApp({
+                          playlists: playlists.filter(x => x.id !== item.id),
+                        }))
+                      }
                     }]
                   }}
                 >
