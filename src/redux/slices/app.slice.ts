@@ -1,16 +1,13 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
 import {addTrackToPlaylist, createPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {enqueueTrack} from "@/redux/actions/player.actions";
 
 export interface AppSliceState {
-  favoriteTracks: YouTubeTrack[];
   playlists: Playlist[];
   createPlaylistModal: boolean;
 }
 
 const initialState: AppSliceState = {
-  favoriteTracks: [],
   playlists: [{
     id: 'FAVORITE',
     name: 'Favorite',
