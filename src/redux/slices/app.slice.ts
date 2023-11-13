@@ -5,6 +5,7 @@ import {enqueueTrack} from "@/redux/actions/player.actions";
 export interface AppSliceState {
   playlists: Playlist[];
   createPlaylistModal: boolean;
+  searchHistory: string[];
 }
 
 const initialState: AppSliceState = {
@@ -16,6 +17,7 @@ const initialState: AppSliceState = {
     artwork: '',
   }],
   createPlaylistModal: false,
+  searchHistory: [],
 }
 
 const appSlice = createSlice({

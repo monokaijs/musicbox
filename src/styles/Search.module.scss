@@ -8,9 +8,14 @@
   .header {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    gap: 8px;
+    flex-direction: column;
     padding: 16px;
+
+    .controls {
+      flex: 1;
+      display: flex;
+      gap: 8px;
+    }
   }
 }
 .searchResults {
