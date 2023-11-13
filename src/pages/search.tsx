@@ -17,6 +17,7 @@ import {setApp} from "@/redux/slices/app.slice";
 export default function SearchPage() {
   const dispatch = useAppDispatch();
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
+  const {queue} = useAppSelector(state => state.player);
   const [results, setResults] = useState([]);
   const searchParams = useSearchParams()
   const query = decodeURIComponent(searchParams.get('q') || "");
@@ -41,6 +42,9 @@ export default function SearchPage() {
       <VerticalTracksList
         tracks={results}
         showFavorite={true}
+        style={{
+          paddingBottom: queue.length === 0 ? 0 : 90,
+        }}
         optionItems={[{
           key: 'add-to-playlist',
           label: 'Add to playlist',

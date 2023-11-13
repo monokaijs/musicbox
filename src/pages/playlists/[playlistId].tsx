@@ -27,6 +27,7 @@ export default function Playlist() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const playlist = useAppSelector(state => state.app.playlists.find(x => x.id === params?.playlistId));
+  const {queue} = useAppSelector(state => state.player);
   const {token: {
     colorBgBase,
   }} = theme.useToken();
@@ -81,7 +82,7 @@ export default function Playlist() {
     <div
       className={styles.content}
       style={{
-        backgroundColor: colorBgBase
+        backgroundColor: colorBgBase,
       }}
     >
       <div className={styles.playlistControls}>
@@ -108,6 +109,9 @@ export default function Playlist() {
       </div>
       <VerticalTracksList
         tracks={playlist?.tracks || []}
+        style={{
+          paddingBottom: queue.length === 0 ? 0 : 90,
+        }}
         optionItems={[{
           key: 'enqueue',
           label: 'Add to queue',

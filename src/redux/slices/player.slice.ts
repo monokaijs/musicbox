@@ -1,6 +1,4 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {toggleFavoriteTrack} from "@/redux/actions/track.actions";
-import {addTrackToPlaylist, createPlaylist, removeTrackFromPlaylist} from "@/redux/actions/playlist.actions";
 import {enqueueTrack} from "@/redux/actions/player.actions";
 import {message} from "antd";
 

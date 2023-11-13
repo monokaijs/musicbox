@@ -17,16 +17,17 @@ interface VerticalTracksListProps {
   tracks: YouTubeTrack[];
   showFavorite?: boolean;
   optionItems?: ItemType[];
+  style?: {};
 }
 
-export default function VerticalTracksList({tracks, showFavorite, optionItems}: VerticalTracksListProps) {
+export default function VerticalTracksList({tracks, showFavorite, optionItems, style}: VerticalTracksListProps) {
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
   const favoriteTracks = favoritePlaylist?.tracks || [];
   const dispatch = useAppDispatch();
 
   return <List
     rootClassName={styles.searchResultsOuter}
-    style={{minHeight: 0}}
+    style={{minHeight: 0, ...style}}
     dataSource={tracks}
     renderItem={(item: YouTubeTrack) => {
       const isPrevFavorite = favoriteTracks.findIndex(x => x.id === item.id) >= 0;

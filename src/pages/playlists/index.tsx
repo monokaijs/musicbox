@@ -12,6 +12,7 @@ import {setApp} from "@/redux/slices/app.slice";
 export default function Playlists() {
   const dispatch = useAppDispatch();
   const {playlists} = useAppSelector(state => state.app);
+  const {queue} = useAppSelector(state => state.player);
 
 
   return <div className={styles.outer}>
@@ -30,7 +31,12 @@ export default function Playlists() {
         Create
       </Button>
     </div>
-    <div className={styles.content}>
+    <div
+      className={styles.content}
+      style={{
+        paddingBottom: queue.length === 0 ? 0 : 90,
+      }}
+    >
       <Row className={styles.list} gutter={[24, 24]}>
         {playlists.map((item: Playlist) => (
           <Col key={item.id} span={8}>
