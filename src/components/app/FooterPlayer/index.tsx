@@ -14,7 +14,7 @@ import {nextTrack, openPlayerModal} from "@/redux/slices/player.slice";
 import {playerEl} from "@/components/providers/PlayerProvider";
 
 export default function FooterPlayer() {
-  const {queue, playingIndex, paused, loading} = useAppSelector(state => state.player);
+  const {queue, playingIndex, paused, loading, currentTime} = useAppSelector(state => state.player);
   const currentTrack = queue?.[playingIndex];
   const dispatch = useAppDispatch();
   return <div
@@ -66,6 +66,14 @@ export default function FooterPlayer() {
         onClick={(e) => {
           e.stopPropagation();
           dispatch(nextTrack())
+        }}
+      />
+    </div>
+    <div className={styles.progress}>
+      <div
+        className={styles.inner}
+        style={{
+          width: `${(currentTime / (currentTrack?.duration.seconds || 1)) * 100}%`
         }}
       />
     </div>

@@ -5,7 +5,6 @@ import styles from "./ConnectDrawer.module.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCopy} from "@fortawesome/free-solid-svg-icons";
 import peerService from "@/services/peer.service";
-import {DataConnection} from "peerjs";
 
 export default function ConnectDrawer() {
   const dispatch = useAppDispatch();
