@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {DataConnection} from "peerjs";
 
 export interface ConnectSliceState {
   connected: boolean;
@@ -6,12 +7,18 @@ export interface ConnectSliceState {
   showDrawer: boolean;
   username?: string;
   peerId?: string;
+  connections: DataConnection[];
+  isHost: boolean;
+  joining: boolean;
 }
 
 const initialState: ConnectSliceState = {
   connected: false,
   roomConnected: false,
   showDrawer: false,
+  connections: [],
+  isHost: false,
+  joining: false,
 }
 
 const connectSlice = createSlice({

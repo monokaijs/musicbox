@@ -1,8 +1,23 @@
+.title {
+  margin: 0;
+}
+
 .peerInfo {
   .label {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 8px;
+  }
+}
+
+.connectCard {
+  margin-top: 16px;
+
+  .connectForm {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
   }
 }

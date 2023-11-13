@@ -12,7 +12,7 @@ export let playerEl: HTMLAudioElement | null = null;
 export default function PlayerProvider({children}: PlayerProviderProps) {
   const dispatch = useAppDispatch();
   const [playingTrack, setPlayingTrack] = useState<YouTubeTrack | null>(null);
-  const {repeatMode, queue, playingIndex, currentTime, shouldUpdateBySeek, volumeLevel} = useAppSelector(state => state.player);
+  const {repeatMode, queue, playingIndex, currentTime, shouldUpdateBySeek, volumeLevel, paused} = useAppSelector(state => state.player);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -66,6 +66,12 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
       });
     }
   }, [queue, playingIndex]);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    console.log('paused', paused);
+    if (paused && !audioRef.current.paused) audioRef.current.pause();
+  }, [paused]);
 
   useEffect(() => {
     const el = audioRef.current;

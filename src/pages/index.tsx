@@ -7,13 +7,19 @@ import PlaylistsSection from "@/components/app/Home/PlaylistsSection";
 import PlayHistorySection from "@/components/app/Home/PlayHistorySection";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars} from "@fortawesome/free-solid-svg-icons";
-import ConnectDrawer from "@/components/app/ConnectDrawer";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {setConnectSlice} from "@/redux/slices/connect.slice";
+import {lazy, useEffect, useState} from "react";
+
+const ConnectDrawer = lazy(() => import('@/components/app/ConnectDrawer'));
 
 export default function Home() {
-  const {connected} = useAppSelector(state => state.connect);
+  const {connected, connections} = useAppSelector(state => state.connect);
   const dispatch = useAppDispatch();
+  const [isClient, setIsClient] = useState(false);
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <Layout style={{minWidth: 0}}>
@@ -24,7 +30,8 @@ export default function Home() {
         />
         <SearchInput/>
         <Badge
-          dot={true}
+          dot={!connected || connections.length === 0}
+          count={connections.length > 0 ? connections.length : undefined}
           status={connected ? 'success' : 'processing'}
         >
           <Button
@@ -41,7 +48,7 @@ export default function Home() {
       <ExploreSection/>
       <PlaylistsSection/>
       <PlayHistorySection/>
-      <ConnectDrawer/>
+      {isClient && <ConnectDrawer/>}
     </Layout>
   )
 }
