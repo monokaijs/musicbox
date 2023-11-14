@@ -8,8 +8,10 @@ export interface ConnectSliceState {
   username?: string;
   peerId?: string;
   connections: DataConnection[];
+  hostId?: string;
   isHost: boolean;
   joining: boolean;
+  mode?: ConnectMode
 }
 
 const initialState: ConnectSliceState = {

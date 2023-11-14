@@ -29,9 +29,11 @@ export default function PeerProvider({}: PeerProviderProps) {
     peerService.onData.addListener((data, conn) => {
       const state = store.getState() as RootState;
       if (data.action === 'hostCheck' && state.connect.joining) {
-        if (data.data === true) {
+        if (data.data.isHost === true) {
           dispatch(setConnectSlice({
             roomConnected: true,
+            hostId: conn.peer,
+            mode: data.data.mode,
           }));
           return message.success("Connected!");
         } else if (!state.connect.isHost) {
@@ -76,7 +78,10 @@ export default function PeerProvider({}: PeerProviderProps) {
       const state = store.getState() as RootState;
       peerService.send(conn, {
         action: 'hostCheck',
-        data: state.connect.isHost,
+        data: {
+          isHost: state.connect.isHost,
+          mode: state.connect.mode,
+        },
       });
       dispatch(setConnectSlice({
         connections: [

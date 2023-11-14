@@ -1,1 +1,1 @@
-type ConnectMode = 'host' | 'member' | 'broadcast';
+type ConnectMode = 'group' | 'broadcast';
