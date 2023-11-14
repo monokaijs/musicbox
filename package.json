@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/compatible": "^5.1.2",
     "@ant-design/icons": "^5.2.6",
     "@distube/ytdl-core": "^4.13.2",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",

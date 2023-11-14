@@ -21,6 +21,7 @@ import {faCopy, faWarning} from "@fortawesome/free-solid-svg-icons";
 import peerService from "@/services/peer.service";
 import {useState} from "react";
 import ParticipantsList from "@/components/app/ConnectDrawer/ParticipantsList";
+import Conversation from "@/components/app/ConnectDrawer/Conversation";
 
 export default function ConnectDrawer() {
   const dispatch = useAppDispatch();
@@ -58,6 +59,10 @@ export default function ConnectDrawer() {
     onClose={onClose}
     open={showDrawer}
     getContainer={false}
+    bodyStyle={{
+      display: 'flex',
+      flexDirection: 'column'
+    }}
   >
     <Typography.Title level={4} className={styles.title}>
       Listen Together
@@ -186,6 +191,11 @@ export default function ConnectDrawer() {
 
     {roomConnected && (
       <Tabs
+        className={'full-height-tabs'}
+        style={{
+          flex: 1,
+          minHeight: 0,
+        }}
         items={[{
           key: 'peers',
           label: `Participants (${connections.length})`,
@@ -193,6 +203,7 @@ export default function ConnectDrawer() {
         }, {
           key: 'chat',
           label: 'Conversation',
+          children: <Conversation/>
         }]}
       />
     )}

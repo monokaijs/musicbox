@@ -11,7 +11,8 @@ export interface ConnectSliceState {
   hostId?: string;
   isHost: boolean;
   joining: boolean;
-  mode?: ConnectMode
+  mode?: ConnectMode;
+  messages: ChatMessage[];
 }
 
 const initialState: ConnectSliceState = {
@@ -21,6 +22,7 @@ const initialState: ConnectSliceState = {
   connections: [],
   isHost: false,
   joining: false,
+  messages: [],
 }
 
 const connectSlice = createSlice({

@@ -53,7 +53,6 @@ export default function PeerProvider({}: PeerProviderProps) {
         }));
       }
       if (data.action === 'seek' && playerEl) {
-        console.log('seek', data);
         playerEl.currentTime = data.data;
       }
       if (data.action === 'requestPeers') {
@@ -63,7 +62,6 @@ export default function PeerProvider({}: PeerProviderProps) {
         });
       }
       if (data.action === 'peersUpdate') {
-        console.log('peers', data);
         // list of peers' username
         const peersList = data.data;
         for (let peer of peersList) {
@@ -72,6 +70,14 @@ export default function PeerProvider({}: PeerProviderProps) {
             peerService.connect(peer).then(() => null);
           }
         }
+      }
+      if (data.action === 'newMessage') {
+        dispatch(setConnectSlice({
+          messages: [
+            ...state.connect.messages,
+            data.data,
+          ],
+        }))
       }
     })
     peerService.onConnection.addListener(conn => {

@@ -1,0 +1,39 @@
+.outer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+
+  .listContainer {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+    .list {
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .commentItem {
+    .text {
+      font-weight: 300;
+    }
+    .name {
+      color: white;
+      font-weight: 600;
+    }
+    .date {
+      font-size: 12px;
+      color: #ffffff68;
+    }
+  }
+}

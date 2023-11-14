@@ -11,3 +11,19 @@ html, body, #__next {
   justify-content: center;
   background-color: #0b0e0e;
 }
+
+.full-height-tabs .ant-tabs-content {
+  height: 100%;
+}
+
+.full-height-tabs .ant-tabs-tabpane {
+  height: 100%;
+}
+
+.ant-comment-content-author {
+  display: flex;
+}
+
+.ant-comment-content-author .ant-comment-content-author-name {
+  flex: 1;
+}
