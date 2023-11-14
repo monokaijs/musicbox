@@ -20,11 +20,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCopy, faWarning} from "@fortawesome/free-solid-svg-icons";
 import peerService from "@/services/peer.service";
 import {useState} from "react";
+import ParticipantsList from "@/components/app/ConnectDrawer/ParticipantsList";
 
 export default function ConnectDrawer() {
   const dispatch = useAppDispatch();
   const [createMode, setCreateMode] = useState<ConnectMode>('broadcast');
-  const {showDrawer, connected, roomConnected, username, isHost, hostId, mode} = useAppSelector(state => state.connect);
+  const {showDrawer, connected, roomConnected, username, isHost, hostId, mode, connections} = useAppSelector(state => state.connect);
 
   const onClose = () => {
     dispatch(setConnectSlice({
@@ -181,6 +182,19 @@ export default function ConnectDrawer() {
           }]}
         />
       </Card>
+    )}
+
+    {roomConnected && (
+      <Tabs
+        items={[{
+          key: 'peers',
+          label: `Participants (${connections.length})`,
+          children: <ParticipantsList/>
+        }, {
+          key: 'chat',
+          label: 'Conversation',
+        }]}
+      />
     )}
 
   </Drawer>;
