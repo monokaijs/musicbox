@@ -35,7 +35,7 @@ export default function PeerProvider({}: PeerProviderProps) {
           }));
           return message.success("Connected!");
         } else if (!state.connect.isHost) {
-          if (state.connect.roomConnected) {
+          if (!state.connect.roomConnected) {
             // when user is trying to connect to a non-host client when not in the room
             // then disconnect that connection since it's useless
             conn.close();
