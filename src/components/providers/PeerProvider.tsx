@@ -35,8 +35,12 @@ export default function PeerProvider({}: PeerProviderProps) {
           }));
           return message.success("Connected!");
         } else if (!state.connect.isHost) {
-          conn.close();
-          return message.error("Peer seems not a valid room.");
+          if (state.connect.roomConnected) {
+            // when user is trying to connect to a non-host client when not in the room
+            // then disconnect that connection since it's useless
+            conn.close();
+            return message.error("Peer seems not a valid room.");
+          }
         }
       }
       if (data.action === 'syncPlayer') {
@@ -50,6 +54,23 @@ export default function PeerProvider({}: PeerProviderProps) {
         console.log('seek', data);
         playerEl.currentTime = data.data;
       }
+      if (data.action === 'requestPeers') {
+        peerService.send(conn, {
+          action: 'peersUpdate',
+          data: state.connect.connections.map(conn => conn.peer)
+        });
+      }
+      if (data.action === 'peersUpdate') {
+        console.log('peers', data);
+        // list of peers' username
+        const peersList = data.data;
+        for (let peer of peersList) {
+          if (!state.connect.connections.find(x => x.peer === peer)) {
+            // connect to peer since he is not in our list
+            peerService.connect(peer).then(() => null);
+          }
+        }
+      }
     })
     peerService.onConnection.addListener(conn => {
       const state = store.getState() as RootState;
@@ -57,15 +78,28 @@ export default function PeerProvider({}: PeerProviderProps) {
         action: 'hostCheck',
         data: state.connect.isHost,
       });
-      if (state.connect.isHost) {
-        dispatch(setConnectSlice({
-          connections: [
-            conn,
-            ...connections,
-          ]
-        }));
+      dispatch(setConnectSlice({
+        connections: [
+          conn,
+          ...state.connect.connections,
+        ]
+      }));
+      if (!state.connect.isHost) {
+        // request peers update
+        peerService.send(conn, {
+          action: 'requestPeers',
+        });
+      } else {
+        // notice other peers that someone has just joined
       }
     });
+
+    peerService.onClose.addListener(conn => {
+      const state = store.getState() as RootState;
+      dispatch(setConnectSlice({
+        connections: state.connect.connections.filter(x => x.connectionId !== conn.connectionId),
+      }));
+    })
   }, []);
 
   useEffect(() => {

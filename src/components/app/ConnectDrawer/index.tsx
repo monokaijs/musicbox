@@ -15,6 +15,7 @@ export default function ConnectDrawer() {
       showDrawer: false,
     }))
   }
+
   const doConnect = ({id}: { id: string }) => {
     peerService.connect(id).then((r: any) => {
       dispatch(setConnectSlice({
@@ -75,7 +76,7 @@ export default function ConnectDrawer() {
         bodyStyle={{padding: 16}}
       >
         <Typography.Text>
-          Join a room by connect anyone currently a participant.
+          Join a room by connect to host's ID.
         </Typography.Text>
         <Form
           className={styles.connectForm}
