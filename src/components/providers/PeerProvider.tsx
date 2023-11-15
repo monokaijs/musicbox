@@ -5,9 +5,11 @@ import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import {setConnectSlice} from "@/redux/slices/connect.slice";
 import {RootState, store} from "@/redux/store";
 import {DataConnection} from "peerjs";
-import {message} from "antd";
+import {message, notification} from "antd";
 import {setPlayer} from "@/redux/slices/player.slice";
 import {playerEl} from "@/components/providers/PlayerProvider";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMessage} from "@fortawesome/free-solid-svg-icons";
 
 interface PeerProviderProps {
 }
@@ -77,7 +79,15 @@ export default function PeerProvider({}: PeerProviderProps) {
             ...state.connect.messages,
             data.data,
           ],
-        }))
+        }));
+        if (!state.connect.showDrawer) {
+          notification.info({
+            icon: <FontAwesomeIcon icon={faMessage}/>,
+            message: (data.data as ChatMessage).author,
+            description: (data.data as ChatMessage).message,
+            placement: 'bottomRight'
+          });
+        }
       }
     })
     peerService.onConnection.addListener(conn => {
@@ -110,7 +120,15 @@ export default function PeerProvider({}: PeerProviderProps) {
       dispatch(setConnectSlice({
         connections: state.connect.connections.filter(x => x.connectionId !== conn.connectionId),
       }));
-    })
+    });
+
+    return () => {
+      dispatch(setConnectSlice({
+        roomConnected: false,
+        connections: [],
+      }));
+      peerService.disconnect();
+    }
   }, []);
 
   useEffect(() => {
