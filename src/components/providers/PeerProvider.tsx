@@ -6,18 +6,20 @@ import {setConnectSlice} from "@/redux/slices/connect.slice";
 import {RootState, store} from "@/redux/store";
 import {DataConnection} from "peerjs";
 import {message, notification} from "antd";
-import {setPlayer} from "@/redux/slices/player.slice";
+import {PlayerSliceState, setPlayer} from "@/redux/slices/player.slice";
 import {playerEl} from "@/components/providers/PlayerProvider";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMessage} from "@fortawesome/free-solid-svg-icons";
+import {usePrevious} from "@/redux/hooks/usePrevious";
 
 interface PeerProviderProps {
 }
 
 export default function PeerProvider({}: PeerProviderProps) {
   const dispatch = useAppDispatch();
-  const {connections, isHost} = useAppSelector(state => state.connect);
+  const {connections, isHost, roomConnected, mode} = useAppSelector(state => state.connect);
   const {queue, playingIndex, currentTime, paused} = useAppSelector(state => state.player);
+  const prevQueue = usePrevious(queue);
 
   useEffect(() => {
     const username = generateUsername('-');
@@ -49,9 +51,9 @@ export default function PeerProvider({}: PeerProviderProps) {
       }
       if (data.action === 'syncPlayer') {
         dispatch(setPlayer({
-          queue: data.data.queue,
-          playingIndex: data.data.playingIndex,
-          paused: data.data.paused,
+          queue: data.data.queue || state.player.queue,
+          playingIndex: data.data.playingIndex || state.player.playingIndex,
+          paused: data.data.paused || state.player.paused,
         }));
       }
       if (data.action === 'seek' && playerEl) {
@@ -132,14 +134,16 @@ export default function PeerProvider({}: PeerProviderProps) {
   }, []);
 
   useEffect(() => {
-    if (isHost) {
+    if (roomConnected && ((mode === 'broadcast' && isHost) || mode === 'group')) {
+      const syncData: Optional<PlayerSliceState> = {
+        playingIndex: playingIndex,
+        paused: paused,
+      };
+      let difference = queue.map(t => t.id).filter(x => !prevQueue?.map(t => t.id).includes(x));
+      if (difference.length > 0) syncData.queue = queue;
       peerService.sendAll({
         action: 'syncPlayer',
-        data: {
-          queue,
-          playingIndex,
-          paused,
-        },
+        data: syncData,
       });
     }
   }, [queue, playingIndex, paused]);

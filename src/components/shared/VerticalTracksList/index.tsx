@@ -86,10 +86,11 @@ export default function VerticalTracksList({tracks, showFavorite, optionItems, s
               <Tooltip title={'Play now'}>
                 <Button
                   onClick={() => {
-                    dispatch(setPlayer({
-                      queue: [item],
-                      playingIndex: 0,
-                    }))
+                    dispatch(enqueueTrack({
+                      track: item,
+                      playNow: true,
+                      clearQueue: true,
+                    }));
                   }}
                   icon={<FontAwesomeIcon icon={faPlay}/>}
                   shape={'circle'}

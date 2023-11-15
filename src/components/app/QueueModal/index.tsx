@@ -1,6 +1,6 @@
 import styles from "./QueueModal.module.scss";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
-import {Button, Checkbox, List, theme, Typography} from "antd";
+import {Button, Checkbox, List, message, theme, Typography} from "antd";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faChevronDown, faPen, faPlay, faSort, faTimes, faTrashCan} from "@fortawesome/free-solid-svg-icons";
 import {getTrackThumbnail} from "@/utils/player.utils";
@@ -11,6 +11,7 @@ import {StrictModeDroppable} from "@/components/shared/StrictModeDroppable";
 
 export default function QueueModal() {
   const {queueModal, queue, playingIndex} = useAppSelector(state => state.player);
+  const {isHost, mode, roomConnected} = useAppSelector(state => state.connect);
   const [editing, setEditing] = useState(false);
   const {token: {colorBgBase, colorPrimary}} = theme.useToken();
   const dispatch = useAppDispatch();
@@ -37,6 +38,7 @@ export default function QueueModal() {
         shape={editing ? 'round' : 'circle'}
         type={'text'}
         icon={<FontAwesomeIcon icon={editing ? faTimes : faPen}/>}
+        disabled={roomConnected && mode === 'broadcast' && !isHost}
       >
         {editing && "Cancel"}
       </Button>
@@ -51,6 +53,10 @@ export default function QueueModal() {
         onDragEnd={(result, provided) => {
           if (!result.destination) return;
           if (result.source.index === result.destination.index) return;
+          if (roomConnected && (mode === 'broadcast' && !isHost)) {
+            message.error(`Broadcast room does not allow you to modify the queue`).then(() => null);
+            return;
+          }
           const newQueue = [...queue];
           const [removed] = newQueue.splice(result.source.index, 1);
           newQueue.splice(result.destination.index, 0, removed);

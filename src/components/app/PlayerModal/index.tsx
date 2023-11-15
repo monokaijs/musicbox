@@ -29,7 +29,7 @@ export default function PlayerModal() {
   const dispatch = useAppDispatch();
   const [seekTime, setSeekTime] = useState(0);
   const [seeking, setSeeking] = useState(false);
-  const {connected, roomConnected, isHost} = useAppSelector(state => state.connect);
+  const {connected, roomConnected, isHost, mode} = useAppSelector(state => state.connect);
   const {openModal, queue, playingIndex, currentTime, paused, loading, repeatMode, shuffle} = useAppSelector(state => state.player);
   const favoritePlaylist = useAppSelector(state => state.app.playlists.find(x => x.id === 'FAVORITE'));
   const currentTrack = queue[playingIndex];
@@ -110,7 +110,7 @@ export default function PlayerModal() {
           tooltip={{
             formatter: (value) => formatTime(value || 0),
           }}
-          disabled={connected && roomConnected && !isHost}
+          disabled={connected && roomConnected && (mode === 'broadcast' && !isHost)}
           onChange={value => {
             setSeeking(true);
             setSeekTime(value);
@@ -122,7 +122,7 @@ export default function PlayerModal() {
               shouldUpdateBySeek: true,
             }));
             const peerService = (await import('@/services/peer.service')).default;
-            if (roomConnected && isHost) {
+            if (roomConnected && ((mode === 'broadcast' && isHost) || mode === 'group')) {
               peerService.sendAll({
                 action: 'seek',
                 data: value,

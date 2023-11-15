@@ -28,6 +28,7 @@ export default function Playlist() {
   const dispatch = useAppDispatch();
   const playlist = useAppSelector(state => state.app.playlists.find(x => x.id === params?.playlistId));
   const {queue} = useAppSelector(state => state.player);
+  const {roomConnected, isHost, mode} = useAppSelector(state => state.connect);
   const {token: {
     colorBgBase,
   }} = theme.useToken();
@@ -39,6 +40,7 @@ export default function Playlist() {
 
   const enqueuePlaylist = async () => {
     setLoading(true);
+    if (roomConnected && mode === 'broadcast' && !isHost) return message.error(`You cannot enqueue your playlist in broadcast room`);
     dispatch(setPlayer({
       queue: playlist?.tracks || [],
       playingIndex: 0,
@@ -48,6 +50,7 @@ export default function Playlist() {
   }
 
   const shufflePlaylist = async () => {
+    if (roomConnected && mode === 'broadcast' && !isHost) return message.error(`You cannot enqueue your playlist in broadcast room`);
     // shuffle before enqueue
     let array = [...(playlist?.tracks || [])];
     for (let i = array.length - 1; i > 0; i--) {

@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {enqueueTrack} from "@/redux/actions/player.actions";
 import {message} from "antd";
+import {RootState, store} from "@/redux/store";
 
 export enum RepeatMode {
   FORWARD = 0,
@@ -84,16 +85,22 @@ const playerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(enqueueTrack.fulfilled, (state, action) => {
-      const existingIndex = state.queue.findIndex(x => x.id === action.payload.track.id);
-      if (existingIndex >= 0) {
-        state.playingIndex = existingIndex;
+      if (action.payload.clearQueue) {
+        state.queue = [action.payload.track];
+        state.playingIndex = 0;
       } else {
-        state.queue.push(action.payload.track);
-        if (action.payload.playNow) {
-          state.playingIndex = state.queue.length - 1;
+        const existingIndex = state.queue.findIndex(x => x.id === action.payload.track.id);
+        if (existingIndex >= 0) {
+          state.playingIndex = existingIndex;
+        } else {
+          state.queue.push(action.payload.track);
+          if (action.payload.playNow) {
+            state.playingIndex = state.queue.length - 1;
+          }
         }
+        message.success("Added to queue").then(() => null);
       }
-      message.success("Added to queue").then(() => null);
+      return state;
     }).addCase(enqueueTrack.rejected, (state, action) => {
       message.error(action.error.message || "Failed to enqueue").then(() => null);
     });
