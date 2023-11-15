@@ -27,6 +27,7 @@ export default function ConnectDrawer() {
   const dispatch = useAppDispatch();
   const [createMode, setCreateMode] = useState<ConnectMode>('broadcast');
   const {showDrawer, connected, roomConnected, username, isHost, hostId, mode, connections} = useAppSelector(state => state.connect);
+  const [connecting, setConnecting] = useState(false);
 
   const onClose = () => {
     dispatch(setConnectSlice({
@@ -35,11 +36,16 @@ export default function ConnectDrawer() {
   }
 
   const doConnect = ({id}: { id: string }) => {
+    setConnecting(true);
     peerService.connect(id).then((r: any) => {
       dispatch(setConnectSlice({
         joining: true,
       }))
+      setTimeout(() => {
+        setConnecting(false);
+      },300);
     }).catch(e => {
+      setConnecting(false);
       return message.error("Failed to connect");
     });
   }
@@ -147,7 +153,7 @@ export default function ConnectDrawer() {
                   />
                 </Form.Item>
 
-                <Button type={'primary'} htmlType={'submit'}>
+                <Button type={'primary'} htmlType={'submit'} loading={connecting}>
                   Connect
                 </Button>
               </Form>
