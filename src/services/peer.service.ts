@@ -58,7 +58,10 @@ class PeerService {
     return new Promise(resolve => {
       if (!id) id = generateUsername('-');
       this.id = id;
-      this.client = new Peer(id);
+      this.client = new Peer(id, {
+        host: 'peer.delimister.com',
+        port: 80
+      });
 
       this.client.on("connection", (conn) => {
         // other client connected
