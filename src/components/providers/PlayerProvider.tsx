@@ -2,6 +2,7 @@ import {ReactNode, useEffect, useRef, useState} from "react";
 import {useAppDispatch, useAppSelector} from "@/redux/hooks";
 import apiService from "@/services/api.service";
 import {nextTrack, RepeatMode, setPlayer} from "@/redux/slices/player.slice";
+import {message} from "antd";
 
 interface PlayerProviderProps {
   children: ReactNode;
@@ -47,6 +48,12 @@ export default function PlayerProvider({children}: PlayerProviderProps) {
       el.onplaying = () => dispatch(setPlayer({paused: el.paused}));
       el.onloadstart = () => dispatch(setPlayer({loading: true}));
       el.oncanplay = () => dispatch(setPlayer({loading: false}));
+      el.onerror = (event: any) => {
+        if (event.target.error && event.target.error.code === 4) {
+          return message.error("Seems like we got trouble while loading audio. Please try another track.");
+          // Handle the error here
+        }
+      }
     }
   }, [audioRef.current]);
 
