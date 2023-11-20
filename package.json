@@ -11,7 +11,7 @@
   "dependencies": {
     "@ant-design/compatible": "^5.1.2",
     "@ant-design/icons": "^5.2.6",
-    "@distube/ytdl-core": "^4.13.2",
+    "@distube/ytdl-core": "^4.13.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
