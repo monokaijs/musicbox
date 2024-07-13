@@ -1,6 +1,5 @@
 import {Innertube} from 'youtubei.js';
 import {NextApiRequest, NextApiResponse} from "next";
-import ytdl from "@distube/ytdl-core";
 import {formatTime} from "@/utils/player.utils";
 
 
